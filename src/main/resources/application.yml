@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri : mongodb+srv://L1B:1234@schoolapp.pqisd0x.mongodb.net/?retryWrites=true&w=majority
+      database : qlsv2
