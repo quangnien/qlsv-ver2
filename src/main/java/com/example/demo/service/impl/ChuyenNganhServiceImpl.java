@@ -20,13 +20,13 @@ public class ChuyenNganhServiceImpl implements ChuyenNganhService {
     private ChuyenNganhRepository chuyenNganhRepository;
 
     @Override
-    public ChuyenNganhEntity addChuyenNganh(ChuyenNganhEntity chuyenNganhEntity) {
+    public ChuyenNganhEntity addNew(ChuyenNganhEntity chuyenNganhEntity) {
         chuyenNganhEntity.setId(UUID.randomUUID().toString().split("-")[0]);
         return chuyenNganhRepository.save(chuyenNganhEntity);
     }
 
     @Override
-    public List<ChuyenNganhEntity> findAllChuyenNganh() {
+    public List<ChuyenNganhEntity> findAll() {
         return chuyenNganhRepository.findAll();
     }
 

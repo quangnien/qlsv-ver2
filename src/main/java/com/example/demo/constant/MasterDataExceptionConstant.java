@@ -59,6 +59,9 @@ public class MasterDataExceptionConstant {
     public static final String E_MONHOC_DUPLICATE_MA_MONHOC = "Mã môn học đã tồn tại, hãy nhập một mã môn học mới!";
     public static final String E_MONHOC_IS_USED = "Môn học đã được sử dụng!";
 
+    /* Mon Hoc Tien Quyet */
+    public static final String E_MONHOCTIENQUYET_NOT_FOUND_MONHOCTIENQUYET = "Môn học tiên quyết không tồn tại!";
+
     /* Ds Lop Tc */
     public static final String E_DSLOPTC_NOT_FOUND_DSLOPTC = "Danh sách lớp tín chỉ không tồn tại!";
     public static final String E_DSLOPTC_DUPLICATE_MA_DSLOPTC = "Mã Ds LopTc đã tồn tại, hãy nhập một mã Ds LopTc mới!";

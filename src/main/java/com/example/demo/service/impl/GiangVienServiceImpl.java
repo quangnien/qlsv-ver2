@@ -42,7 +42,7 @@ public class GiangVienServiceImpl implements GiangVienService {
     //CRUD  CREATE , READ , UPDATE , DELETE
 
     @Override
-    public GiangVienEntity addGiangVien(GiangVienEntity giangVienEntity) {
+    public GiangVienEntity addNew(GiangVienEntity giangVienEntity) {
         
         giangVienEntity.setPassword("123456");
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -18,7 +19,27 @@ public class KeHoachNamServiceImpl implements KeHoachNamService {
     private KeHoachNamRepository keHoachNamRepository;
 
     @Override
-    public KeHoachNamEntity getKeHoachNamByMaKeHoach(String maKeHoachNam) {
+    public KeHoachNamEntity addNew(KeHoachNamEntity keHoachNamEntity) {
+        keHoachNamEntity.setId(UUID.randomUUID().toString().split("-")[0]);
+        return keHoachNamRepository.save(keHoachNamEntity);
+    }
+
+    @Override
+    public List<KeHoachNamEntity> findAll() {
+        Sort sort = Sort.by(
+                Sort.Order.desc("nam"),
+                Sort.Order.desc("ky")
+        );
+        return keHoachNamRepository.findAll(sort);
+    }
+
+    @Override
+    public KeHoachNamEntity findById(String id) {
+        return keHoachNamRepository.findById(id).get();
+    }
+
+    @Override
+    public KeHoachNamEntity findByMaKeHoach(String maKeHoachNam) {
         return keHoachNamRepository.getKeHoachNamByMaKeHoach(maKeHoachNam);
     }
 

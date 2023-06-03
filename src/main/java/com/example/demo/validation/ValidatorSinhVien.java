@@ -123,6 +123,16 @@ public class ValidatorSinhVien implements Validator {
     }
 
     @Transactional
+    public void validateGetSinhVienByMaSV(String maSV) throws BusinessException {
+
+        int countMaSinhVien = sinhVienRepository.countSinhVienByMaSV(maSV);
+
+        if (countMaSinhVien == 0) {
+            throw new BusinessException(MasterDataExceptionConstant.E_SINHVIEN_NOT_FOUND_SINHVIEN);
+        }
+    }
+
+    @Transactional
     public void validateGetListSinhVienByMaLop(String maLop) throws BusinessException {
 
         if(maLop == null || "".equals(maLop)){

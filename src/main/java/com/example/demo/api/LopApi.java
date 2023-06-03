@@ -67,7 +67,7 @@ public class LopApi {
 
             validatorLop.validateAddLop(lopEntity);
 
-            LopEntity lopEntityResult = lopService.addLop(lopEntity);
+            LopEntity lopEntityResult = lopService.addNew(lopEntity);
             returnObject.setRetObj(lopEntityResult);
         }
         catch (Exception ex){

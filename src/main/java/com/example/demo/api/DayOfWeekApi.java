@@ -67,7 +67,7 @@ public class DayOfWeekApi {
 
             validatorDayOfWeek.validateAddDayOfWeek(dayOfWeekEntity);
 
-            DayOfWeekEntity dayOfWeekEntityResult = dayOfWeekService.addDayOfWeek(dayOfWeekEntity);
+            DayOfWeekEntity dayOfWeekEntityResult = dayOfWeekService.addNew(dayOfWeekEntity);
             returnObject.setRetObj(dayOfWeekEntityResult);
         }
         catch (Exception ex){

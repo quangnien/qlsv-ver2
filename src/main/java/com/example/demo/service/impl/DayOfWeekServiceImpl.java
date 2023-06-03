@@ -20,7 +20,7 @@ public class DayOfWeekServiceImpl implements DayOfWeekService {
     private DayOfWeekRepository dayOfWeekRepository;
 
     @Override
-    public DayOfWeekEntity addDayOfWeek(DayOfWeekEntity dayOfWeekEntity) {
+    public DayOfWeekEntity addNew(DayOfWeekEntity dayOfWeekEntity) {
         dayOfWeekEntity.setId(UUID.randomUUID().toString().split("-")[0]);
         return dayOfWeekRepository.save(dayOfWeekEntity);
     }

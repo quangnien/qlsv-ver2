@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GiangVienService {
 
-    public GiangVienEntity addGiangVien(GiangVienEntity giangVienEntity);
+    public GiangVienEntity addNew(GiangVienEntity giangVienEntity);
     public GiangVienEntity updateGiangVien(GiangVienEntity giangVienEntity);
     public List<String> deleteListGiangVien(List<String> listId);
     public List<GiangVienEntity> findAll();

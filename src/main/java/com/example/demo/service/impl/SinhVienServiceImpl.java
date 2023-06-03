@@ -148,7 +148,7 @@ public class SinhVienServiceImpl implements SinhVienService {
 //    }
 
     @Override
-    public SinhVienEntity addSinhVien(SinhVienEntity sinhVienEntity) {
+    public SinhVienEntity addNew(SinhVienEntity sinhVienEntity) {
 
         sinhVienEntity.setPassword("123456");
 
@@ -212,7 +212,12 @@ public class SinhVienServiceImpl implements SinhVienService {
     }
 
     @Override
-    public SinhVienEntity updateSinhVien(SinhVienEntity sinhVienEntity) {
+    public SinhVienEntity updateExist(SinhVienEntity sinhVienEntity) {
+
+        // set TEN LOP
+        LopEntity lopEntity = lopRepository.findByMaLop(sinhVienEntity.getMaLop());
+        sinhVienEntity.setTenLop(lopEntity.getTenLop());
+
         return sinhVienRepository.save(sinhVienEntity);
     }
 

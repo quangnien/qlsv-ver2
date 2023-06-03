@@ -67,7 +67,7 @@ public class ChuyenNganhApi {
 
             validatorChuyenNganh.validateAddChuyenNganh(chuyenNganhEntity);
 
-            ChuyenNganhEntity chuyenNganhEntityResult = chuyenNganhService.addChuyenNganh(chuyenNganhEntity);
+            ChuyenNganhEntity chuyenNganhEntityResult = chuyenNganhService.addNew(chuyenNganhEntity);
             returnObject.setRetObj(chuyenNganhEntityResult);
         }
         catch (Exception ex){
@@ -101,7 +101,7 @@ public class ChuyenNganhApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            List<ChuyenNganhEntity> listChuyenNganhEntity = chuyenNganhService.findAllChuyenNganh();
+            List<ChuyenNganhEntity> listChuyenNganhEntity = chuyenNganhService.findAll();
             returnObject.setRetObj(listChuyenNganhEntity);
         }
         catch (Exception ex){

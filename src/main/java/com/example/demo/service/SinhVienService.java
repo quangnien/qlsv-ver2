@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface SinhVienService {
 
-    public SinhVienEntity addSinhVien(SinhVienEntity sinhVienEntity);
-    public SinhVienEntity updateSinhVien(SinhVienEntity sinhVienEntity);
+    public SinhVienEntity addNew(SinhVienEntity sinhVienEntity);
+    public SinhVienEntity updateExist(SinhVienEntity sinhVienEntity);
     public List<String> deleteListSinhVien(List<String> listId);
     public List<SinhVienEntity> findAll();
     public SinhVienEntity findById(String id);

@@ -32,7 +32,7 @@ public class LopServiceImpl implements LopService {
     private LopRepository lopRepository;
 
     @Override
-    public LopEntity addLop(LopEntity lopEntity) {
+    public LopEntity addNew(LopEntity lopEntity) {
         lopEntity.setId(UUID.randomUUID().toString().split("-")[0]);
         return lopRepository.save(lopEntity);
     }

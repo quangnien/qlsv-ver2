@@ -79,7 +79,7 @@ public class SinhVienApi {
             returnObject.setMessage("200");
 
             validatorSinhVien.validateAddSinhVien(sinhVienEntity);
-            SinhVienEntity sinhVienEntityResult = sinhVienService.addSinhVien(sinhVienEntity);
+            SinhVienEntity sinhVienEntityResult = sinhVienService.addNew(sinhVienEntity);
             returnObject.setRetObj(sinhVienEntityResult);
         }
         catch (Exception ex){
@@ -120,7 +120,7 @@ public class SinhVienApi {
             returnObject.setMessage("200");
 
             validatorSinhVien.validateEditSinhVien(sinhVienEntity);
-            sinhVienService.updateSinhVien(sinhVienEntity);
+            sinhVienService.updateExist(sinhVienEntity);
 
             returnObject.setRetObj(sinhVienEntity);
         }
@@ -205,7 +205,7 @@ public class SinhVienApi {
 
     /* GET BY ID */
     @Operation(summary = "Get Sinh Vien by id.")
-    @GetMapping("/sinhVien/{sinhVienId}")
+    @GetMapping("/sinhVien/{maSV}")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
@@ -241,8 +241,8 @@ public class SinhVienApi {
     }
 
     /* GET BY MASV */
-    @Operation(summary = "Get Sinh Vien by id.")
-    @GetMapping("/sinhVien/{sinhVienId}")
+    @Operation(summary = "Get Sinh Vien by maSV.")
+    @GetMapping("/sinhVien/maSV/{maSV}")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
@@ -254,18 +254,18 @@ public class SinhVienApi {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SinhVienEntity.class)) }),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SinhVienEntity.class)) })})
-    public ResponseEntity<?> getSinhVienById(@PathVariable String sinhVienId) {
+    public ResponseEntity<?> getSinhVienByMaSV(@PathVariable String maSV) {
 
         ReturnObject returnObject = new ReturnObject();
         try {
-            log.info("Get SinhVien By Id!");
+            log.info("Get SinhVien By maSV!");
 
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            validatorSinhVien.validateGetSinhVienById(sinhVienId);
+            validatorSinhVien.validateGetSinhVienByMaSV(maSV);
 
-            SinhVienEntity sinhVienEntity = sinhVienService.findById(sinhVienId);
+            SinhVienEntity sinhVienEntity = sinhVienService.findByMaSV(maSV);
             returnObject.setRetObj(sinhVienEntity);
         }
         catch (Exception ex){
@@ -277,6 +277,7 @@ public class SinhVienApi {
         return ResponseEntity.ok(returnObject);
     }
 
+    /* GET BY MALOP */
     @Operation(summary = "Get Sinh Vien by maLop.")
     @GetMapping("/sinhVien/lop/{maLop}")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
@@ -292,7 +293,7 @@ public class SinhVienApi {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SinhVienEntity.class)) })})
     public ResponseEntity<?> getSinhVienByLopId(@PathVariable String maLop,
                                                 @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "12") int size) {
+                                                @RequestParam(defaultValue = "999") int size) {
 
         ReturnObject returnObject = new ReturnObject();
         try {

@@ -22,7 +22,7 @@ public class GVDOWServiceImpl implements GVDOWService {
 
 
     @Override
-    public GVDOWDto editGVDOW(GVDOWDto gvdowDto) {
+    public GVDOWDto updateExist(GVDOWDto gvdowDto) {
         String maGV = gvdowDto.getMaGV();
 
         for(String maDOW: gvdowDto.getMaDOWList()){

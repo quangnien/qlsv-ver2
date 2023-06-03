@@ -20,13 +20,13 @@ public class CTDTServiceImpl implements CTDTService {
     private CTDTRepository ctdtRepository;
 
     @Override
-    public CTDTEntity addCTDT(CTDTEntity CTDTEntity) {
+    public CTDTEntity addNew(CTDTEntity CTDTEntity) {
         CTDTEntity.setId(UUID.randomUUID().toString().split("-")[0]);
         return ctdtRepository.save(CTDTEntity);
     }
 
     @Override
-    public List<CTDTEntity> findAllCTDT() {
+    public List<CTDTEntity> findAll() {
         return ctdtRepository.findAll();
     }
 

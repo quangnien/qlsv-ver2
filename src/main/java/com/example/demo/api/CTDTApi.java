@@ -67,7 +67,7 @@ public class CTDTApi {
 
             validatorCTDT.validateAddCTDT(ctdtEntity);
 
-            CTDTEntity ctdtEntityResult = ctdtService.addCTDT(ctdtEntity);
+            CTDTEntity ctdtEntityResult = ctdtService.addNew(ctdtEntity);
             returnObject.setRetObj(ctdtEntityResult);
         }
         catch (Exception ex){
@@ -101,7 +101,7 @@ public class CTDTApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            List<CTDTEntity> listCTDTEntity = ctdtService.findAllCTDT();
+            List<CTDTEntity> listCTDTEntity = ctdtService.findAll();
             returnObject.setRetObj(listCTDTEntity);
         }
         catch (Exception ex){

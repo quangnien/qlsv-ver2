@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author NienNQ
@@ -87,7 +86,7 @@ public class GiangVienApi {
             returnObject.setMessage("200");
 
             validatorGiangVien.validateAddGiangVien(giangVienEntity);
-            GiangVienEntity giangVienEntityResult = giangVienService.addGiangVien(giangVienEntity);
+            GiangVienEntity giangVienEntityResult = giangVienService.addNew(giangVienEntity);
             returnObject.setRetObj(giangVienEntityResult);
         }
         catch (Exception ex){
@@ -295,7 +294,7 @@ public class GiangVienApi {
             gvdowDtoValid.setMaGV(gvdowDto.getMaGV());
             gvdowDtoValid.setMaDOWList(maDOWList);
 
-            GVDOWDto gvdowDtoResult = gvdowService.editGVDOW(gvdowDtoValid);
+            GVDOWDto gvdowDtoResult = gvdowService.updateExist(gvdowDtoValid);
 
             returnObject.setRetObj(gvdowDtoResult);
         }
