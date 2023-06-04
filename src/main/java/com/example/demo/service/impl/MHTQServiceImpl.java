@@ -27,7 +27,7 @@ public class MHTQServiceImpl implements MHTQService {
 
 
     @Override
-    public MHMHTQDto updateExist(MHMHTQDto mhmhtqDto) {
+    public void updateExist(MHMHTQDto mhmhtqDto) {
         String maMH = mhmhtqDto.getMaMH();
 
         for(String maMHTQ: mhmhtqDto.getMaMHTQList()){
@@ -44,8 +44,6 @@ public class MHTQServiceImpl implements MHTQService {
 
             mhtqRepository.save(mhtqEntity);
         }
-
-        return mhmhtqDto;
     }
 
     @Override
@@ -61,6 +59,11 @@ public class MHTQServiceImpl implements MHTQService {
     @Override
     public List<MHTQEntity> findAll() {
         return mhtqRepository.findAll();
+    }
+
+    @Override
+    public void deleteRecord(String id) {
+        mhtqRepository.deleteById(id);
     }
 
 }

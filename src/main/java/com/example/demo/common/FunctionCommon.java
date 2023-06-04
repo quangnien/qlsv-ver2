@@ -6,7 +6,9 @@ import com.example.demo.payload.request.SignupRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -65,5 +67,16 @@ public class FunctionCommon {
         } else {
             return floor + 1;
         }
+    }
+
+    public List<String> convertListToSetToList(List<String> result){
+        // Convert List to Set
+        Set<String> resultSet = new HashSet<>(result);
+
+        // Convert Set back to List
+        List<String> resultList = new ArrayList<>(resultSet);
+
+        // Return the List
+        return resultList;
     }
 }

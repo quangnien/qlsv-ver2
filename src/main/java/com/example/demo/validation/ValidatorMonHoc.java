@@ -1,6 +1,5 @@
 package com.example.demo.validation;
 
-import com.example.demo.common.FunctionCommon;
 import com.example.demo.constant.MasterDataExceptionConstant;
 import com.example.demo.entity.MonHocEntity;
 import com.example.demo.exception.BusinessException;
@@ -97,7 +96,7 @@ public class ValidatorMonHoc implements Validator {
         int countMaMonHoc = monHocRepository.countMonHocByMaMH(maMH);
         int countMaMonHocTienQuyet = monHocRepository.countMonHocByMaMH(maMHTQ);
 
-        Long countMHMHTQ = mhtqRepository.countByMaMHAndMaMHTQ(maMH, maMHTQ);
+        Long countMHMHTQ = mhtqRepository.countMHTQByMaMHAndMaMHTQ(maMH, maMHTQ);
 
         if (countMHMHTQ > 0) {
             return false;

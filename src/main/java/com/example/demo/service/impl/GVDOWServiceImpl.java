@@ -1,8 +1,10 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.GVDOWDto;
+import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.GvDowEntity;
 import com.example.demo.repository.GVDOWRepository;
+import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.service.GVDOWService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,18 @@ public class GVDOWServiceImpl implements GVDOWService {
     @Autowired
     private GVDOWRepository gvdowRepository;
 
-
     @Override
     public GVDOWDto updateExist(GVDOWDto gvdowDto) {
         String maGV = gvdowDto.getMaGV();
+
+        /* REMOVE ALL -> maGV */
+        List<GvDowEntity> gvDowEntityList = gvdowRepository.findAllByMaGV(gvdowDto.getMaGV());
+        if(gvDowEntityList != null){
+            for(GvDowEntity item : gvDowEntityList){
+                gvdowRepository.deleteById(item.getId());
+            }
+        }
+        /* END REMOVE ALL -> maGV */
 
         for(String maDOW: gvdowDto.getMaDOWList()){
             GvDowEntity gvDowEntity = new GvDowEntity();
@@ -49,5 +59,10 @@ public class GVDOWServiceImpl implements GVDOWService {
     @Override
     public GvDowEntity findById(String id) {
         return gvdowRepository.findById(id).get();
+    }
+
+    @Override
+    public void deleteRecord(String id) {
+        gvdowRepository.deleteById(id);
     }
 }

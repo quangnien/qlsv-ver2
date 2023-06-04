@@ -2,9 +2,13 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.GVDOWDto;
+import com.example.demo.dto.GiangDayDto;
+import com.example.demo.entity.GiangDayEntity;
 import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.GvDowEntity;
+import com.example.demo.entity.MHTQEntity;
 import com.example.demo.service.GVDOWService;
+import com.example.demo.service.GiangDayService;
 import com.example.demo.service.GiangVienService;
 import com.example.demo.service.UserService;
 import com.example.demo.validation.ValidatorGiangVien;
@@ -55,6 +59,9 @@ public class GiangVienApi {
 
     @Autowired
     private GVDOWService gvdowService;
+
+    @Autowired
+    private GiangDayService giangDayService;
 
     /* CREATE */
     @Operation(summary = "Create Giang Vien.")
@@ -276,27 +283,51 @@ public class GiangVienApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            GVDOWDto gvdowDtoValid = new GVDOWDto();
-            List<String> maDOWList = new ArrayList<>();
-
-            String maGV = gvdowDto.getMaGV();
-            for(String maDOW: gvdowDto.getMaDOWList()){
-                GvDowEntity gvDowEntity = new GvDowEntity();
-                gvDowEntity.setMaGV(maGV);
-                gvDowEntity.setMaDOW(maDOW);
-
-                boolean isValid = validatorGiangVien.validateEditDKTimePossible(maGV, maDOW);
-                if(isValid == true){
-                    maDOWList.add(maDOW);
-                }
-            }
-
-            gvdowDtoValid.setMaGV(gvdowDto.getMaGV());
-            gvdowDtoValid.setMaDOWList(maDOWList);
-
-            GVDOWDto gvdowDtoResult = gvdowService.updateExist(gvdowDtoValid);
+            GVDOWDto gvdowDtoResult = gvdowService.updateExist(gvdowDto);
 
             returnObject.setRetObj(gvdowDtoResult);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
+    }
+
+    /* ĐK MON HOC */
+    @Operation(summary = "Giang Vien Dang Ky Mon Hoc Giang Day.")
+    @PostMapping("/giangVien/giangDay")
+    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = GiangVienEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = GiangVienEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = GiangVienEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = GiangVienEntity.class)) })})
+    public ResponseEntity<?> createGiangVienGiangDay(@Valid @RequestBody GiangDayDto giangDayDto, BindingResult bindingResult) {
+
+        ReturnObject returnObject = new ReturnObject();
+
+        if (bindingResult.hasErrors()) {
+            returnObject.setStatus(ReturnObject.ERROR);
+            returnObject.setMessage(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+            return ResponseEntity.ok(returnObject);
+        }
+        try {
+            log.info("Giang Vien Dang Ky Mon Hoc Giang Day!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            GiangDayDto giangDayDtoResult = giangDayService.updateExist(giangDayDto);
+
+            returnObject.setRetObj(giangDayDtoResult);
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);

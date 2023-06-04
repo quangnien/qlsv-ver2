@@ -11,4 +11,5 @@ public interface GVDOWService {
     public List<GvDowEntity> findAllByMaGV(String maGV);
     public List<GvDowEntity> findAllByMaDOW(String maDOW);
     public GvDowEntity findById(String id);
+    public void deleteRecord(String id);
 }

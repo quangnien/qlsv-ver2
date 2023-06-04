@@ -13,8 +13,8 @@ public interface MHTQRepository extends MongoRepository<MHTQEntity, String> {
 //    @Query(value = "{'maMH': ?0, '_id': {$ne: ?1}}", count = true)
 //    Long countMHTQByMaMHTQAndNotId(String maMH, String id);
 
-    @Query(value = "{maMH: ?0, maMHTQ: ?1 }", count = true)
-    Long countByMaMHAndMaMHTQ(String maMH, String maMHTQ);
+    @Query(value = "{ 'maMH': ?0, 'maMHTQ': ?1 }", count = true)
+    Long countMHTQByMaMHAndMaMHTQ(String maMH, String maMHTQ);
 
     List<MHTQEntity> findAllByMaMH(String maMH);
     List<MHTQEntity> findAllByMaMHTQ(String maMHTQ);

@@ -2,12 +2,12 @@ package com.example.demo.validation;
 
 import com.example.demo.common.FunctionCommon;
 import com.example.demo.constant.MasterDataExceptionConstant;
-import com.example.demo.dto.GVDOWDto;
 import com.example.demo.dto.UpdatePasswordDto;
 import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.repository.GVDOWRepository;
+import com.example.demo.repository.GiangDayRepository;
 import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.service.UserService;
@@ -40,6 +40,9 @@ public class ValidatorGiangVien implements Validator {
 
     @Autowired
     private GVDOWRepository gvdowRepository;
+
+    @Autowired
+    private GiangDayRepository giangDayRepository;
 
     @Autowired
     private FunctionCommon functionCommon;
@@ -190,7 +193,19 @@ public class ValidatorGiangVien implements Validator {
     @Transactional
     public boolean validateEditDKTimePossible(String maGV, String maDOW) throws BusinessException {
 
-        Long countMaGiangVien = gvdowRepository.countByMaSvAndMaLopTc(maGV, maDOW);
+        Long countMaGiangVien = gvdowRepository.countByMaGVAndMaDOW(maGV, maDOW);
+
+        if (countMaGiangVien > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Transactional
+    public boolean validateEditDKMonHocPossible(String maGV, String maMH) throws BusinessException {
+
+        Long countMaGiangVien = giangDayRepository.countByMaGVAndMaMH(maGV, maMH);
 
         if (countMaGiangVien > 0) {
             return false;

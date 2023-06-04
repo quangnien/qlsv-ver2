@@ -30,9 +30,14 @@ public class LopEntity {
 
 	/* FOREIGN KEY */
 
-	@NotBlank(message = "Vui Lòng Nhập Mã Chuyên Ngành")
-	@Length(min = 2 , message = "Mã chuyên ngành chứa ít nhất 2 ký tự!")
-	private String maCN;
+	@Indexed(unique = true)
+	@NotBlank(message = "Vui Lòng Nhập Mã Chương Trình Đào Tạo")
+	@Length(min = 2 , message = "Mã chương trình đào tạo chứa ít nhất 2 ký tự!")
+	private String maCTDT;
 
-	private String tenCN;
+//	@NotBlank(message = "Vui Lòng Nhập Mã Chuyên Ngành")
+//	@Length(min = 2 , message = "Mã chuyên ngành chứa ít nhất 2 ký tự!")
+//	private String maCN;
+//
+//	private String tenCN;
 }

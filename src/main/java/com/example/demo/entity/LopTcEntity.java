@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LopTinChiEntity {
+public class LopTcEntity {
 	
 	@Id
 	private String id;
@@ -30,22 +30,16 @@ public class LopTinChiEntity {
 	@Length(min = 2 , message = "Niên khóa chứa ít nhất 2 ký tự!")
 	private String nienKhoa;
 
-	private int ky;
-	private int nhom;
-	private int soLuongThucTe;
-	private int soLuongToiDa;
+	@NotBlank(message = "Vui Lòng Nhập Số Lượng Sinh Viên")
+	private int soLuong;
+
+	private int soLuongCon;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
 	private Date timeBd;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
 	private Date timeKt;
-
-//	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-//	private Date tgDongDk;
-//
-//	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-//	private Date tgMoDk;
 
 	private int trangThai;
 
@@ -54,16 +48,16 @@ public class LopTinChiEntity {
 	@Length(min = 2 , message = "Mã môn học chỉ chứa ít nhất 2 ký tự!")
 	private String maMH;
 
-	@NotBlank(message = "Vui Lòng Nhập Mã Giáo Viên")
-	@Length(min = 2 , message = "Mã giáo viên chỉ chứa ít nhất 2 ký tự!")
-	private String maGV;
+	@NotBlank(message = "Vui Lòng Nhập Mã Lớp")
+	@Length(min = 4 , message = "Mã lớp chứa ít nhất 4 ký tự!")
+	private String maLop;
 
 	@NotBlank(message = "Vui Lòng Nhập Mã Kế Hoạch")
 	@Length(min = 2 , message = "Mã kế hoạch chỉ chứa ít nhất 2 ký tự!")
 	private String maKeHoach;
 
 	private String tenMH;
-	private String tenGV;
+	private String tenLop;
 	private String tenKeHoach;
 
 }
