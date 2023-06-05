@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MonHocService {
     
-    //    public List<MonHocEntity> findAllByMaKhoa(String maKhoa, int page, int size);
+    //    public List<MonHocEntity> findAllByMaLop(String maLop, int page, int size);
     //    public MonHocEntity getByMaMH(String maMh);
     
     List<MonHocEntity> findByTenMHContainingIgnoreCaseLike(String keySearch);
@@ -17,5 +17,7 @@ public interface MonHocService {
     public MonHocEntity findById(String id);
     public MonHocEntity findByMaMH(String maMH);
     public List<String> deleteList(List<String> lstId);
+
+    public List<MonHocEntity> findAllByMaLop(String maLop);
 
 }

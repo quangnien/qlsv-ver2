@@ -3,6 +3,7 @@ package com.example.demo.validation;
 import com.example.demo.constant.MasterDataExceptionConstant;
 import com.example.demo.entity.MonHocEntity;
 import com.example.demo.exception.BusinessException;
+import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.MHTQRepository;
 import com.example.demo.repository.MonHocRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class ValidatorMonHoc implements Validator {
 
     @Autowired
     private MonHocRepository monHocRepository;
+
+    @Autowired
+    private LopRepository lopRepository;
 
     @Autowired
     private MHTQRepository mhtqRepository;
@@ -114,20 +118,20 @@ public class ValidatorMonHoc implements Validator {
         return true;
     }
 
-//    @Transactional
-//    public void validateGetListMonHocByMaKhoa(String maKhoa) throws BusinessException {
-//
-//        if(maKhoa == null || "".equals(maKhoa)){
-//            throw new BusinessException(MasterDataExceptionConstant.E_KHOA_NOT_FOUND_KHOA);
-//        }
-//        else {
-//            int countKhoaByMaKhoa = khoaRepository.countKhoaByMaKhoa(maKhoa);
-//
-//            if (countKhoaByMaKhoa == 0) {
-//                throw new BusinessException(MasterDataExceptionConstant.E_KHOA_NOT_FOUND_KHOA);
-//            }
-//        }
-//
-//    }
+    @Transactional
+    public void validateGetListMonHocByMaLop(String maLop) throws BusinessException {
+
+        if(maLop == null || "".equals(maLop)){
+            throw new BusinessException(MasterDataExceptionConstant.E_LOP_NOT_FOUND_LOP);
+        }
+        else {
+            int countLopByMaLop = lopRepository.countLopByMaLop(maLop);
+
+            if (countLopByMaLop == 0) {
+                throw new BusinessException(MasterDataExceptionConstant.E_LOP_NOT_FOUND_LOP);
+            }
+        }
+
+    }
 
 }

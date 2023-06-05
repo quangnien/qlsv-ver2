@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.MoLopTcDto;
 import com.example.demo.entity.LopTcEntity;
 
 import java.util.List;
 
 public interface LopTcService {
 
-    public List<LopTcEntity> getListLopTcByMaLop(String maLop, int page, int size);
+    public List<LopTcEntity> findAllByMaLop(String maLop, int page, int size);
 
     public List<LopTcEntity> getListLopTcByMaMH(String maMH);
 
@@ -22,6 +23,7 @@ public interface LopTcService {
 
     public List<LopTcEntity> findAllByMaKeHoach(String maKeHoach);
 
-    public LopTcEntity getLopTcById(String id);
+    public LopTcEntity findById(String id);
 
+    void createListNew(MoLopTcDto moLopTcDto);
 }

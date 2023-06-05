@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LopTcRepository extends MongoRepository<LopTcEntity, String> {
 
@@ -36,7 +37,5 @@ public interface LopTcRepository extends MongoRepository<LopTcEntity, String> {
 //    List<LopTcEntity> findAllByMaGVAndMaKeHoach(String maGv, String maKeHoach);
 
     List<LopTcEntity> findAllByMaKeHoach(String maKeHoach);
-
-    LopTcEntity getLopTcById(String id);
 
 }

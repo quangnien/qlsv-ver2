@@ -1,10 +1,19 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.CTDTEntity;
+import com.example.demo.entity.LopEntity;
 import com.example.demo.entity.MonHocEntity;
+import com.example.demo.entity.TichLuyEntity;
+import com.example.demo.repository.CTDTRepository;
+import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.MonHocRepository;
+import com.example.demo.repository.TichLuyRepository;
 import com.example.demo.service.MonHocService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +29,18 @@ public class MonHocServiceImpl implements MonHocService {
     @Autowired
     private MonHocRepository monHocRepository;
 
-//    public List<MonHocEntity> findAllByMaKhoa(String maKhoa, int page, int size){
+    @Autowired
+    private CTDTRepository ctdtRepository;
+
+    @Autowired
+    private TichLuyRepository tichLuyRepository;
+
+    @Autowired
+    private LopRepository lopRepository;
+
+//    public List<MonHocEntity> findAllByMaLop(String maLop, int page, int size){
 //        Pageable pageable = PageRequest.of(page, size);
-//        Page<MonHocEntity> resultPage = monHocRepository.findAllByMaKhoa(maKhoa, pageable);
+//        Page<MonHocEntity> resultPage = monHocRepository.findAllByMaLop(maLop, pageable);
 //        return resultPage.getContent();
 //    }
 
@@ -84,6 +102,24 @@ public class MonHocServiceImpl implements MonHocService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<MonHocEntity> findAllByMaLop(String maLop){
+
+        /* LOP -> CTDT -> TICH_LUY -> MON_HOC list */
+        LopEntity lopEntity = lopRepository.findByMaLop(maLop);
+//        CTDTEntity ctdtEntity = ctdtRepository.findByMaCTDT(lopEntity.getMaCTDT());
+        List<TichLuyEntity> tichLuyEntityList = tichLuyRepository.findAllByMaCTDT(lopEntity.getMaCTDT());
+        List<MonHocEntity> monHocEntityList = new ArrayList<>();
+        for(TichLuyEntity tichLuyEntity : tichLuyEntityList){
+            MonHocEntity monHocEntity = monHocRepository.findByMaMH(tichLuyEntity.getMaMH());
+            if(monHocEntity != null){
+                monHocEntityList.add(monHocEntity);
+            }
+        }
+
+        return monHocEntityList;
     }
 
 }

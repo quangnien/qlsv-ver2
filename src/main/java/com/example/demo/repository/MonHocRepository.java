@@ -17,8 +17,5 @@ public interface MonHocRepository extends MongoRepository<MonHocEntity, String> 
 
     MonHocEntity findByMaMH(String maMH);
 
-//    Page<MonHocEntity> findAllByMaKhoa(String maKhoa, Pageable pageable);
-
     List<MonHocEntity> findByTenMHLikeIgnoreCase(String keySearch);
-
 }
