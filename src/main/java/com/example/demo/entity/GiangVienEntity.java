@@ -54,6 +54,8 @@ public class GiangVienEntity {
 	@JsonIgnore
 	private String password;
 
+	private String hinhAnh;
+
 	/* FOREIGN KEY */
 //	@NotBlank(message = "Vui Lòng Nhập Mã Khoa")
 //	@Length(min = 2 , message = "Mã khoa chứa ít nhất 2 ký tự!")

@@ -49,6 +49,8 @@ public class SinhVienEntity {
 	
 	private int trangThai;
 
+	private String hinhAnh;
+
 	@NotBlank(message = "Vui lòng nhập Email!")
 	@Email(message = "Nhập đúng định dạng email!")
 	private String email;
