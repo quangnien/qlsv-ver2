@@ -77,10 +77,10 @@ public class MasterDataExceptionConstant {
     public static final String E_CHITIETLOPTC_IS_USED = "Chi Tiet Lop TC is used!";
 
     /* Diem */
-    public static final String E_DIEM_NOT_FOUND_DSLOPTC = "Điểm không tồn tại!";
-    public static final String E_DIEM_DUPLICATE_MASV_MALOPTC = "(Ma sinh vien, Ma lop tin chi) đã tồn tại!";
-    public static final String E_DIEM_IS_USED = "Diem is used!";
-    public static final String E_DIEM_LIST_MAlOPTC_NULL = "Bạn chưa lựa chọn lớp tín chỉ để hủy đăng ký!";
+    public static final String E_DANGKY_NOT_FOUND_DSLOPTC = "Điểm không tồn tại!";
+    public static final String E_DANGKY_DUPLICATE_MASV_MALOPTC = "(Ma sinh vien, Ma lop tin chi) đã tồn tại!";
+    public static final String E_DANGKY_IS_USED = "Diem is used!";
+    public static final String E_DANGKY_LIST_MAlOPTC_NULL = "Bạn chưa lựa chọn lớp tín chỉ để hủy đăng ký!";
 
     /* TKB */
     public static final String E_TKB_NOT_FOUND_DATE_BEGIN = "Ngày bắt đầu không để bị trống!";
@@ -92,7 +92,7 @@ public class MasterDataExceptionConstant {
     public static final String E_KEHOACHNAM_IS_USED = "Ke Hoach Nam is used!";
 
     /* Thong Ke */
-    public static final String E_THONGKEDIEM_NOT_FOUND_THONGKEDIEM = "Invalid input!";
+    public static final String E_THONGKEDANGKY_NOT_FOUND_THONGKEDANGKY = "Invalid input!";
 
 //    /* Common */
 //    public static final String COMMON_EMAIL_WRONG_FORMAT = "You entered the wrong format for email@gmail.com!";
@@ -143,9 +143,9 @@ public class MasterDataExceptionConstant {
 //    public static final String E_CHITIETLOPTC_IS_USED = "Chi Tiet Lop TC is used!";
 //
 //    /* Diem */
-//    public static final String E_DIEM_NOT_FOUND_DSLOPTC = "Diem does not exist!";
-//    public static final String E_DIEM_DUPLICATE_MASV_MALOPTC = "(Ma sinh vien, Ma lop tin chi) exists, please input another one!";
-//    public static final String E_DIEM_IS_USED = "Diem is used!";
+//    public static final String E_DANGKY_NOT_FOUND_DSLOPTC = "Diem does not exist!";
+//    public static final String E_DANGKY_DUPLICATE_MASV_MALOPTC = "(Ma sinh vien, Ma lop tin chi) exists, please input another one!";
+//    public static final String E_DANGKY_IS_USED = "Diem is used!";
 //
 //    /* TKB */
 //    public static final String E_TKB_NOT_FOUND_DATE_BEGIN = "Date begin is null!";
@@ -157,6 +157,6 @@ public class MasterDataExceptionConstant {
 //    public static final String E_KEHOACHNAM_IS_USED = "Ke Hoach Nam is used!";
 //
 //    /* Thong Ke */
-//    public static final String E_THONGKEDIEM_NOT_FOUND_THONGKEDIEM = "Invalid input!";
+//    public static final String E_THONGKEDANGKY_NOT_FOUND_THONGKEDANGKY = "Invalid input!";
 
 }

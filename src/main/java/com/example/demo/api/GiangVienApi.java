@@ -296,7 +296,7 @@ public class GiangVienApi {
         return ResponseEntity.ok(returnObject);
     }
 
-    /* ĐK MON HOC */
+    /* ĐK MON HOC TO GIANGDAY */
     @Operation(summary = "Giang Vien Dang Ky Mon Hoc Giang Day.")
     @PostMapping("/giangVien/giangDay")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN')")

@@ -14,4 +14,7 @@ public interface TichLuyRepository extends MongoRepository<TichLuyEntity, String
 
     List<TichLuyEntity> findAllByMaCTDT(String maCTDT);
     List<TichLuyEntity> findAllByMaMH(String maMH);
+
+    TichLuyEntity findByMaCTDTAndMaMH(String maCTDT, String maMH);
+
 }

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection = "ke_hoach_nam")
@@ -31,15 +32,15 @@ public class KeHoachNamEntity {
 	private int nam;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeDkMonBegin;
+	private LocalDate timeDkMonBegin;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeDkMonEnd;
+	private LocalDate timeDkMonEnd;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeStudyBegin;
+	private LocalDate timeStudyBegin;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeStudyEnd;
+	private LocalDate timeStudyEnd;
 
 }

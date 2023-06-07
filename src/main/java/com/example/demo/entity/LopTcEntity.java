@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection = "lop_tin_chi")
@@ -36,10 +37,10 @@ public class LopTcEntity {
 	private int soLuongCon;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeBd;
+	private LocalDate timeBd;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
-	private Date timeKt;
+	private LocalDate timeKt;
 
 	private int trangThai;
 

@@ -19,7 +19,7 @@ public interface LopTcRepository extends MongoRepository<LopTcEntity, String> {
 
     List<LopTcEntity> getListDsLopByMaLop(String maLop);
 
-    LopTcEntity getLopTcByMaLopTc(String maLopTc);
+    LopTcEntity findByMaLopTc(String maLopTc);
 
     int countLopTcByMaLop(String maLop);
 //    int countLopTcByMaGV(String maGv);

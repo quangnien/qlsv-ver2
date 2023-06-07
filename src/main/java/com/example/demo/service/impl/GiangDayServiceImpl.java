@@ -77,8 +77,4 @@ public class GiangDayServiceImpl implements GiangDayService {
         return giangDayRepository.findById(id).get();
     }
 
-    @Override
-    public void deleteRecord(String id) {
-        giangDayRepository.deleteById(id);
-    }
 }

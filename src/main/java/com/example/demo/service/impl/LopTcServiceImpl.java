@@ -76,7 +76,7 @@ public class LopTcServiceImpl implements LopTcService {
 
     @Override
     public LopTcEntity getLopTcByMaLopTc(String maLopTc) {
-        return lopTcRepository.getLopTcByMaLopTc(maLopTc);
+        return lopTcRepository.findByMaLopTc(maLopTc);
     }
 
     @Override

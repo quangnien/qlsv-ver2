@@ -10,5 +10,4 @@ public interface GiangDayService {
     public List<GiangDayEntity> findAllByMaGV(String maGV);
     public List<GiangDayEntity> findAllByMaMH(String maMH);
     public GiangDayEntity findById(String id);
-    public void deleteRecord(String id);
 }

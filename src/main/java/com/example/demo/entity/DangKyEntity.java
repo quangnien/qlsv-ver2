@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 
-@Document(collection = "diem")
+@Document(collection = "dang_ky")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +28,7 @@ public class DangKyEntity {
 //	@NotBlank(message = "Vui Lòng Nhập Xếp Loại")
 	private String xepLoai;
 
-	private int trangThaiDk;
+//	private int trangThaiDk;
 
 	/* FOREIGN KEY */
 	@NotBlank(message = "Vui Lòng Nhập Mã Sinh Viên")
@@ -40,6 +40,12 @@ public class DangKyEntity {
 	private String maLopTc;
 
 	private String tenSV;
-	private String tenLopTc;
-	
+	private String tenMH;
+
+	private int tlCc;
+	private int tlGk;
+	private int tlCk;
+	private int stc;
+	private String maKeHoach;
+
 }
