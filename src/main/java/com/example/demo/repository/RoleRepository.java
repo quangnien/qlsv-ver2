@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.user.ERole;
+import com.example.demo.entity.ERole;
 import com.example.demo.entity.RoleEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

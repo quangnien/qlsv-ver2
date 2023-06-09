@@ -1,7 +1,11 @@
 package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
+import com.example.demo.dto.MHMHTQDto;
+import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.MHTQEntity;
+import com.example.demo.entity.MHTQEntity;
+import com.example.demo.service.MHTQService;
 import com.example.demo.service.MHTQService;
 import com.example.demo.validation.ValidatorMHTQ;
 import com.example.demo.validation.ValidatorMonHoc;
@@ -15,8 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

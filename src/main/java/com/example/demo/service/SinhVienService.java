@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.user.SinhVienEntity;
+import com.example.demo.entity.SinhVienEntity;
 
 import java.util.List;
 
