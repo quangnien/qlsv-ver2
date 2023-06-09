@@ -2,11 +2,11 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.DangKyDto;
 import com.example.demo.entity.*;
+import com.example.demo.entity.user.SinhVienEntity;
 import com.example.demo.enumdef.XepLoaiEnum;
 import com.example.demo.repository.*;
 import com.example.demo.service.DangKyService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -87,7 +87,7 @@ public class DangKyServiceImpl implements DangKyService {
             /* end SET MORE INFO */
             SinhVienEntity sinhVientity = sinhVienRepository.findByMaSV(maSV);
 
-            dangKyEntity.setTenSV(sinhVientity.getHoSV() + " " + sinhVientity.getTenSV());
+            dangKyEntity.setTenSV(sinhVientity.getHo() + " " + sinhVientity.getTen());
             dangKyEntity.setTenMH(lopTcEntity.getTenMH());
 
             dangKyEntity.setMaKeHoach(lopTcEntity.getMaKeHoach());

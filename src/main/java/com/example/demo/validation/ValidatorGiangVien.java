@@ -3,7 +3,7 @@ package com.example.demo.validation;
 import com.example.demo.common.FunctionCommon;
 import com.example.demo.constant.MasterDataExceptionConstant;
 import com.example.demo.dto.UpdatePasswordDto;
-import com.example.demo.entity.GiangVienEntity;
+import com.example.demo.entity.user.GiangVienEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.repository.GVDOWRepository;
