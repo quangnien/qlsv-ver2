@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.user.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

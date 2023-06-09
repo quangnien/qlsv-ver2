@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SinhVienEntity {
+public class SinhVienEntity implements UserInterface{
 	
 	@Id
 	private String id;
@@ -30,10 +30,10 @@ public class SinhVienEntity {
 	private String maSV;
 	
 	@NotBlank(message = "Vui Lòng Nhập Họ")
-	private String hoSV;
+	private String ho;
 	
 	@NotBlank(message = "Vui Lòng Nhập Tên")
-	private String tenSV;
+	private String ten;
 
 	@NotBlank(message = "Vui Lòng Nhập Địa Chỉ")
 	private String diaChi;
@@ -66,4 +66,35 @@ public class SinhVienEntity {
 
 	private String tenLop;
 
+
+	/* more method */
+
+	public String getMaSV() {
+		return maSV;
+	}
+
+	public void setMaSV(String maSV) {
+		this.maSV = maSV;
+	}
+
+	public String getMaLop() {
+		return maLop;
+	}
+
+	public void setMaLop(String maLop) {
+		this.maLop = maLop;
+	}
+
+	public String getTenLop() {
+		return tenLop;
+	}
+
+	public void setTenLop(String tenLop) {
+		this.tenLop = tenLop;
+	}
+
+	@Override
+	public String sayHello() {
+		return "Tạo tài khoản sinh viên : " + this.ho + " " + this.ten + " thành công!";
+	}
 }

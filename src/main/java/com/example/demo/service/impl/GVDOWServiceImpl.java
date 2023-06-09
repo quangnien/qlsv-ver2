@@ -1,10 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.GVDOWDto;
-import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.GvDowEntity;
 import com.example.demo.repository.GVDOWRepository;
-import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.service.GVDOWService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

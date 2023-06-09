@@ -1,7 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
-import com.example.demo.entity.SinhVienEntity;
+import com.example.demo.entity.user.SinhVienEntity;
 import com.example.demo.service.SinhVienService;
 import com.example.demo.service.UserService;
 import com.example.demo.validation.ValidatorSinhVien;

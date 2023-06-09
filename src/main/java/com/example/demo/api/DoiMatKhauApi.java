@@ -2,8 +2,8 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.UpdatePasswordDto;
-import com.example.demo.entity.GiangVienEntity;
-import com.example.demo.entity.SinhVienEntity;
+import com.example.demo.entity.user.GiangVienEntity;
+import com.example.demo.entity.user.SinhVienEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.repository.SinhVienRepository;

@@ -1,7 +1,7 @@
 package com.example.demo.common;
 
-import com.example.demo.entity.GiangVienEntity;
-import com.example.demo.entity.SinhVienEntity;
+import com.example.demo.entity.user.GiangVienEntity;
+import com.example.demo.entity.user.SinhVienEntity;
 import com.example.demo.payload.request.SignupRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class FunctionCommon {
             objectTemp.setPassword(result.getPassword());
             objectTemp.setEmail(result.getEmail());
             objectTemp.setUserId(result.getId());
-            objectTemp.setUserFullName(result.getHoSV() + " " + result.getTenSV());
+            objectTemp.setUserFullName(result.getHo() + " " + result.getTen());
 
             Set<String> roles = new HashSet<>();
             roles.add("SINHVIEN");
@@ -42,7 +42,7 @@ public class FunctionCommon {
             objectTemp.setPassword(result.getPassword());
             objectTemp.setEmail(result.getEmail());
             objectTemp.setUserId(result.getId());
-            objectTemp.setUserFullName(result.getHoGV() + " " + result.getTenGV());
+            objectTemp.setUserFullName(result.getHo() + " " + result.getTen());
 
             Set<String> roles = new HashSet<>();
             roles.add("GIANGVIEN");

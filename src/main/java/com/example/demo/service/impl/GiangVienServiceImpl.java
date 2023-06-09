@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.common.FunctionCommon;
-import com.example.demo.entity.ERole;
-import com.example.demo.entity.GiangVienEntity;
+import com.example.demo.entity.user.ERole;
+import com.example.demo.entity.user.GiangVienEntity;
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.payload.request.SignupRequest;
@@ -91,7 +91,7 @@ public class GiangVienServiceImpl implements GiangVienService {
 
         user.setRoles(roles);
         user.setUserId(giangVienEntity.getId());
-        user.setUserFullName(giangVienEntity.getHoGV() + " " + giangVienEntity.getTenGV());
+        user.setUserFullName(giangVienEntity.getHo() + " " + giangVienEntity.getTen());
         userRepository.save(user);
         /*_____________________________________________*/
         /* END CREATE ACCOUNT USER WITH ROLE_GIANGVIEN */
