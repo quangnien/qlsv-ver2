@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.GiangDayDto;
 import com.example.demo.entity.GiangDayEntity;
-import com.example.demo.entity.user.GiangVienEntity;
+import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.MonHocEntity;
 import com.example.demo.repository.GiangDayRepository;
 import com.example.demo.repository.GiangVienRepository;
@@ -53,7 +53,7 @@ public class GiangDayServiceImpl implements GiangDayService {
             GiangVienEntity giangVienEntity = giangVienRepository.findByMaGV(maGV);
             MonHocEntity monHocEntity = monHocRepository.findByMaMH(maMH);
 
-            giangDayEntity.setTenGV(giangVienEntity.getHo() + " " + giangVienEntity.getTen());
+            giangDayEntity.setTenGV(giangVienEntity.getHoGV() + " " + giangVienEntity.getTenGV());
             giangDayEntity.setTenMH(monHocEntity.getTenMH());
 
             giangDayRepository.save(giangDayEntity);

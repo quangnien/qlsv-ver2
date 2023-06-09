@@ -2,7 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.SigninInfoDto;
-import com.example.demo.entity.user.ERole;
+import com.example.demo.entity.ERole;
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.payload.request.LoginRequest;

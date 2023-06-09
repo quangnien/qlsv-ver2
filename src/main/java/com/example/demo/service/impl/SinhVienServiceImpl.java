@@ -2,8 +2,6 @@ package com.example.demo.service.impl;
 
 import com.example.demo.common.FunctionCommon;
 import com.example.demo.entity.*;
-import com.example.demo.entity.user.ERole;
-import com.example.demo.entity.user.SinhVienEntity;
 import com.example.demo.payload.request.SignupRequest;
 import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.RoleRepository;
@@ -162,62 +160,53 @@ public class SinhVienServiceImpl implements SinhVienService {
         /* BEGIN CREATE ACCOUNT USER WITH ROLE_SINHVIEN*/
         /*_____________________________________________*/
 
+        SignupRequest signUpRequest = functionCommon.createUserAccountTemp(sinhVienEntity);
+
         // Create new user's account
         UserEntity user = new UserEntity(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()), signUpRequest.getUserId(), signUpRequest.getUserFullName());
 
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<RoleEntity> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "ADMIN":
+                        RoleEntity adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+
+                    case "SINHVIEN":
+                        RoleEntity sinhvienRole = roleRepository.findByName(ERole.ROLE_SINHVIEN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(sinhvienRole);
+                        break;
+
+                    case "GIANGVIEN":
+                        RoleEntity giangvienRole = roleRepository.findByName(ERole.ROLE_GIANGVIEN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(giangvienRole);
+                        break;
+                }
+            });
+        }
+
+        sinhVienEntity.setId(UUID.randomUUID().toString().split("-")[0]);
+
+        user.setRoles(roles);
+        user.setUserId(sinhVienEntity.getId());
+        user.setUserFullName(sinhVienEntity.getHoSV() + " " + sinhVienEntity.getTenSV());
+        userRepository.save(user);
         /*____________________________________________*/
         /* END CREATE ACCOUNT USER WITH ROLE_SINHVIEN */
         /*____________________________________________*/
-
-//        SignupRequest signUpRequest = functionCommon.createUserAccountTemp(sinhVienEntity);
-//
-//        // Create new user's account
-//        UserEntity user = new UserEntity(signUpRequest.getUsername(),
-//                signUpRequest.getEmail(),
-//                encoder.encode(signUpRequest.getPassword()), signUpRequest.getUserId(), signUpRequest.getUserFullName());
-//
-//        Set<String> strRoles = signUpRequest.getRoles();
-//        Set<RoleEntity> roles = new HashSet<>();
-//
-//        if (strRoles == null) {
-//            RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
-//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//            roles.add(userRole);
-//        } else {
-//            strRoles.forEach(role -> {
-//                switch (role) {
-//                    case "ADMIN":
-//                        RoleEntity adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(adminRole);
-//                        break;
-//
-//                    case "SINHVIEN":
-//                        RoleEntity sinhvienRole = roleRepository.findByName(ERole.ROLE_SINHVIEN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(sinhvienRole);
-//                        break;
-//
-//                    case "GIANGVIEN":
-//                        RoleEntity giangvienRole = roleRepository.findByName(ERole.ROLE_GIANGVIEN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(giangvienRole);
-//                        break;
-//                }
-//            });
-//        }
-//
-//        sinhVienEntity.setId(UUID.randomUUID().toString().split("-")[0]);
-//
-//        user.setRoles(roles);
-//        user.setUserId(sinhVienEntity.getId());
-//        user.setUserFullName(sinhVienEntity.getHo() + " " + sinhVienEntity.getTen());
-//        userRepository.save(user);
-//        /*____________________________________________*/
-//        /* END CREATE ACCOUNT USER WITH ROLE_SINHVIEN */
-//        /*____________________________________________*/
 
         return sinhVienRepository.save(sinhVienEntity);
     }
