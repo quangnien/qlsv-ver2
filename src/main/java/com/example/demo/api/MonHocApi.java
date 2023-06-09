@@ -276,8 +276,8 @@ public class MonHocApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            List<MonHocEntity> monHocEntityList = monHocService.findAll();
-            returnObject.setRetObj(monHocEntityList);
+            List<MonHocModifyDto> monHocModifyDtoList = monHocService.findAllMonHocModify();
+            returnObject.setRetObj(monHocModifyDtoList);
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);

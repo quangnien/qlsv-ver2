@@ -25,5 +25,6 @@ public class MonHocModifyDto {
 	private String tenMH;
 
 	private List<String> maMHTQList;
+	private List<String> tenMHTQList;
 
 }

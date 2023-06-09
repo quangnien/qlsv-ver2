@@ -1,19 +1,15 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.CTDTEntity;
-import com.example.demo.entity.LopEntity;
-import com.example.demo.entity.MonHocEntity;
-import com.example.demo.entity.TichLuyEntity;
-import com.example.demo.repository.CTDTRepository;
-import com.example.demo.repository.LopRepository;
-import com.example.demo.repository.MonHocRepository;
-import com.example.demo.repository.TichLuyRepository;
+import com.example.demo.dto.MonHocModifyDto;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.MonHocService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +24,9 @@ public class MonHocServiceImpl implements MonHocService {
 
     @Autowired
     private MonHocRepository monHocRepository;
+
+    @Autowired
+    private MHTQRepository mhtqRepository;
 
     @Autowired
     private CTDTRepository ctdtRepository;
@@ -120,6 +119,30 @@ public class MonHocServiceImpl implements MonHocService {
         }
 
         return monHocEntityList;
+    }
+
+    @Override
+    public List<MonHocModifyDto> findAllMonHocModify() {
+        List<MonHocModifyDto> monHocModifyDtoList = new ArrayList<>();
+        List<MonHocEntity> monHocEntityList = monHocRepository.findAll();
+        for(MonHocEntity monHocEntity : monHocEntityList){
+            List<MHTQEntity> mhtqEntityList = mhtqRepository.findAllByMaMH(monHocEntity.getMaMH());
+            List<String> maMHTQList = new ArrayList<>();
+            List<String> tenMHTQList = new ArrayList<>();
+            for(MHTQEntity mhtqEntity : mhtqEntityList){
+                maMHTQList.add(mhtqEntity.getMaMHTQ());
+                tenMHTQList.add(mhtqEntity.getTenMHTQ());
+            }
+
+            MonHocModifyDto monHocModifyDto = new MonHocModifyDto();
+            monHocModifyDto.setId(monHocEntity.getId());
+            monHocModifyDto.setMaMH(monHocEntity.getMaMH());
+            monHocModifyDto.setTenMH(monHocEntity.getTenMH());
+            monHocModifyDto.setMaMHTQList(maMHTQList);
+            monHocModifyDto.setTenMHTQList(tenMHTQList);
+            monHocModifyDtoList.add(monHocModifyDto);
+        }
+        return monHocModifyDtoList;
     }
 
 }

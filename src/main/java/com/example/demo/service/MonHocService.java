@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.MonHocModifyDto;
 import com.example.demo.entity.MonHocEntity;
 
 import java.util.List;
@@ -19,5 +20,8 @@ public interface MonHocService {
     public List<String> deleteList(List<String> lstId);
 
     public List<MonHocEntity> findAllByMaLop(String maLop);
+
+    public List<MonHocModifyDto> findAllMonHocModify();
+
 
 }
