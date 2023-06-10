@@ -35,17 +35,21 @@ public class GiangVienEntity {
 	@NotBlank(message = "Vui Lòng Nhập Tên")
 	private String tenGV;
 
+	@NotBlank(message = "Vui Lòng Nhập Địa Chỉ")
+	private String diaChi;
+
 	@NotBlank(message = "Vui Lòng Nhập Giới Tính")
 	private String phai;
 
 	@DateTimeFormat(pattern =  "yyyy-MM-dd")
 	private Date ngaySinh;
 
-	@NotBlank(message = "Vui Lòng Nhập Địa Chỉ")
-	private String diaChi;
-
 	@Pattern(regexp = "(^$|[0-9]{10})" , message = "Phone number must be 10 digits!")
 	private String sdt;
+
+	private int trangThai;
+
+	private String hinhAnh;
 
 	@NotBlank(message = "Vui lòng nhập Email!")
 	@Email(message = "Nhập đúng định dạng email!")
@@ -53,8 +57,6 @@ public class GiangVienEntity {
 
 	@JsonIgnore
 	private String password;
-
-	private String hinhAnh;
 
 	/* FOREIGN KEY */
 //	@NotBlank(message = "Vui Lòng Nhập Mã Khoa")

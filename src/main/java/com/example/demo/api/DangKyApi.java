@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.DangKyDto;
+import com.example.demo.dto.DangKyResponseDto;
 import com.example.demo.entity.*;
 import com.example.demo.service.DangKyService;
 import com.example.demo.service.KeHoachNamService;
@@ -79,7 +80,10 @@ public class DangKyApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            DangKyDto dangKyMonDtoResult = dangKyService.updateExistDangKyMon(dangKyMonDto);
+            KeHoachNamEntity keHoachNamEntity = keHoachNamService.getKeHoachNamClosest();
+            String maKeHoachClosest = keHoachNamEntity.getMaKeHoach();
+
+            DangKyResponseDto dangKyMonDtoResult = dangKyService.updateExistDangKyMon(dangKyMonDto, maKeHoachClosest);
 
             returnObject.setRetObj(dangKyMonDtoResult);
         }

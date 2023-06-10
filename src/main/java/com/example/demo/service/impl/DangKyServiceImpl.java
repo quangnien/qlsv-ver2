@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.DangKyDto;
+import com.example.demo.dto.DangKyResponseDto;
 import com.example.demo.entity.*;
 import com.example.demo.enumdef.XepLoaiEnum;
 import com.example.demo.repository.*;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +34,9 @@ public class DangKyServiceImpl implements DangKyService {
     private MonHocRepository monHocRepository;
 
     @Autowired
+    private MHTQRepository mhtqRepository;
+
+    @Autowired
     private LopTcRepository lopTcRepository;
 
     @Autowired
@@ -44,14 +49,21 @@ public class DangKyServiceImpl implements DangKyService {
     private SinhVienRepository sinhVienRepository;
 
     @Override
-    public DangKyDto updateExistDangKyMon(DangKyDto dangKyDto) {
+    public DangKyResponseDto updateExistDangKyMon(DangKyDto dangKyDto, String maKeHoachClosest) {
 
         String maSV = dangKyDto.getMaSV();
 
+        DangKyResponseDto dangKyResponseDto = new DangKyResponseDto();
+        dangKyResponseDto.setMaSV(dangKyDto.getMaSV());
+        List<String> errorMessage = new ArrayList<>();
+        List<String> maLopTcList = new ArrayList<>();
+
         /* REMOVE ALL -> maSV */
-        List<DangKyEntity> dangKyEntityList = dangKyRepository.findAllByMaSV(dangKyDto.getMaSV());
-        if(dangKyEntityList != null){
-            for(DangKyEntity item : dangKyEntityList){
+//        List<DangKyEntity> dangKyEntityListKeHoachClosest = dangKyRepository.findAllByMaSV(dangKyDto.getMaSV());
+
+        List<DangKyEntity> dangKyEntityListKeHoachClosest = dangKyRepository.findAllByMaSVAndMaKeHoach(dangKyDto.getMaSV(), maKeHoachClosest);
+        if(dangKyEntityListKeHoachClosest != null){
+            for(DangKyEntity item : dangKyEntityListKeHoachClosest){
 
                 /*SET SOLUONGCON CUA LOPTINCHI*/
                 LopTcEntity lopTcEntity = lopTcRepository.findByMaLopTc(item.getMaLopTc());
@@ -67,6 +79,55 @@ public class DangKyServiceImpl implements DangKyService {
 
         for(String maLopTc: dangKyDto.getMaLopTcList()){
 
+            /* begin KIEM TRA DIEU KIEN MON TIEN QUYET */
+            LopTcEntity lopTcEntity = lopTcRepository.findByMaLopTc(maLopTc);
+            List<MHTQEntity> mhtqEntityList = mhtqRepository.findAllByMaMH(lopTcEntity.getMaMH());
+
+            boolean dontFinish = true;
+
+            List<DangKyEntity> dangKyEntityList = dangKyRepository.findAllByMaSV(dangKyDto.getMaSV());
+            List<LopTcEntity> lopTcEntityList = new ArrayList<>();
+            for(DangKyEntity dangKyEntity : dangKyEntityList){
+                LopTcEntity ltcTemp = lopTcRepository.findByMaLopTc(dangKyEntity.getMaLopTc());
+                if(ltcTemp != null){
+                    lopTcEntityList.add(ltcTemp);
+                }
+            }
+
+            for (MHTQEntity mhtqEntity : mhtqEntityList) {
+                boolean found = false;
+                for (LopTcEntity ltcItem : lopTcEntityList) {
+                    if (mhtqEntity.getMaMHTQ().equals(ltcItem.getMaMH())) {
+                        DangKyEntity dangKyEntity = dangKyRepository.findByMaSVAndMaLopTc(dangKyDto.getMaSV(), ltcItem.getMaLopTc());
+                        if(dangKyEntity.getXepLoai() == null || dangKyEntity.getXepLoai().equals("F")){
+                            found = false;
+                        }
+                        else {
+                            found = true;
+                        }
+                        break;
+                    }
+                }
+
+                // Nếu chưa hoàn thành MHTQ
+                if (!found) {
+                    dontFinish = false;
+                    String errorMessageItem = mhtqEntity.getTenMHTQ() + " chưa được hoàn thành đối với môn học " + mhtqEntity.getTenMH() + ", đây là môn học tiên quyết!";
+                    errorMessage.add(errorMessageItem);
+                    break;
+                }
+            }
+
+            if(dontFinish == false){
+//                String errorMessageItem = lopTcEntity.getTenMH() + " chưa được hoàn thành, đây là môn học tiên quyết!";
+//                errorMessage.add(errorMessageItem);
+                continue;
+            }
+
+            /* end KIEM TRA DIEU KIEN MON TIEN QUYET */
+
+            maLopTcList.add(maLopTc);
+
             DangKyEntity dangKyEntity = new DangKyEntity();
             dangKyEntity.setId(UUID.randomUUID().toString().split("-")[0]);
             dangKyEntity.setMaLopTc(maLopTc);
@@ -78,7 +139,7 @@ public class DangKyServiceImpl implements DangKyService {
             dangKyEntity.setXepLoai(XepLoaiEnum.F.getName());
 
             /* begin SET SOLUONGCON CUA LOPTINCHI */
-            LopTcEntity lopTcEntity = lopTcRepository.findByMaLopTc(maLopTc);
+//            LopTcEntity lopTcEntity = lopTcRepository.findByMaLopTc(maLopTc);
             if(lopTcEntity != null){
                 lopTcEntity.setSoLuongCon(lopTcEntity.getSoLuongCon() - 1);
             }
@@ -103,12 +164,13 @@ public class DangKyServiceImpl implements DangKyService {
 
             /* end SET MORE INFO */
 
-
-
             dangKyRepository.save(dangKyEntity);
         }
 
-        return dangKyDto;
+        dangKyResponseDto.setMaLopTcList(maLopTcList);
+        dangKyResponseDto.setErrorMessage(errorMessage);
+
+        return dangKyResponseDto;
     }
 
     @Override
