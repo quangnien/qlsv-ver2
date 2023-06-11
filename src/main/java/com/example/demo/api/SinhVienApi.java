@@ -217,7 +217,7 @@ public class SinhVienApi {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SinhVienEntity.class)) }),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SinhVienEntity.class)) })})
-    public ResponseEntity<?> getSinhVienById(@PathVariable String sinhVienId) {
+    public ResponseEntity<?> getSinhVienById(@PathVariable String maSV) {
 
         ReturnObject returnObject = new ReturnObject();
         try {
@@ -226,9 +226,9 @@ public class SinhVienApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            validatorSinhVien.validateGetSinhVienById(sinhVienId);
+            validatorSinhVien.validateGetSinhVienById(maSV);
 
-            SinhVienEntity sinhVienEntity = sinhVienService.findById(sinhVienId);
+            SinhVienEntity sinhVienEntity = sinhVienService.findById(maSV);
             returnObject.setRetObj(sinhVienEntity);
         }
         catch (Exception ex){
