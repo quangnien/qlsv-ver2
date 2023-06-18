@@ -33,21 +33,16 @@ public class ValidatorDangKy implements Validator {
     private SinhVienRepository sinhVienRepository;
     @Autowired
     private LopTcRepository lopTcRepository;
-
     @Autowired
     private KeHoachNamRepository keHoachNamRepository;
-
     @Autowired
     private MonHocRepository monHocRepository;
-
     @Autowired
     private LopTcService lopTcService;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
     }
-
     @Override
     public void validate(Object target, Errors errors) {
 
@@ -152,6 +147,15 @@ public class ValidatorDangKy implements Validator {
                 }
             }
         }
+    }
+
+    @Transactional
+    public void validateGetListNoMonByMaSV(String maSV) throws BusinessException {
+
+        if(maSV == null || "".equals(maSV)){
+            throw new BusinessException(MasterDataExceptionConstant.E_SINHVIEN_NOT_FOUND_SINHVIEN);
+        }
+
     }
 
 }

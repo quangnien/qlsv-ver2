@@ -3,6 +3,7 @@ package com.example.demo.validation;
 import com.example.demo.constant.MasterDataExceptionConstant;
 import com.example.demo.entity.MonHocEntity;
 import com.example.demo.exception.BusinessException;
+import com.example.demo.repository.GiangDayRepository;
 import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.MHTQRepository;
 import com.example.demo.repository.MonHocRepository;
@@ -27,6 +28,9 @@ public class ValidatorMonHoc implements Validator {
 
     @Autowired
     private LopRepository lopRepository;
+
+    @Autowired
+    private GiangDayRepository giangDayRepository;
 
     @Autowired
     private MHTQRepository mhtqRepository;
@@ -124,11 +128,20 @@ public class ValidatorMonHoc implements Validator {
         if(maLop == null || "".equals(maLop)){
             throw new BusinessException(MasterDataExceptionConstant.E_LOP_NOT_FOUND_LOP);
         }
-        else {
-            int countLopByMaLop = lopRepository.countLopByMaLop(maLop);
 
-            if (countLopByMaLop == 0) {
-                throw new BusinessException(MasterDataExceptionConstant.E_LOP_NOT_FOUND_LOP);
+    }
+
+    @Transactional
+    public void validateGetListMonHocByMaGV(String maGV) throws BusinessException {
+
+        if(maGV == null || "".equals(maGV)){
+            throw new BusinessException(MasterDataExceptionConstant.E_GIANGVIEN_NOT_FOUND_GIANGVIEN);
+        }
+        else {
+            int countMonHocByMaGV = giangDayRepository.countByMaGV(maGV);
+
+            if (countMonHocByMaGV == 0) {
+                throw new BusinessException(MasterDataExceptionConstant.E_MONHOC_NOT_FOUND_MONHOC);
             }
         }
 

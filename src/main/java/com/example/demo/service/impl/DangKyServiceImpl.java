@@ -252,4 +252,15 @@ public class DangKyServiceImpl implements DangKyService {
 
         return resultPage.getContent();
     }
+
+    @Override
+    public List<DangKyEntity> findAlByMaSV(String maSV) {
+        List<DangKyEntity> dangKyEntityList = dangKyRepository.findAllByMaSV(maSV);
+        for(DangKyEntity dangKyEntity : dangKyEntityList){
+            if(dangKyEntity.getXepLoai() == null || dangKyEntity.getXepLoai().equals("F")){
+                dangKyEntityList.add(dangKyEntity);
+            }
+        }
+        return dangKyEntityList;
+    }
 }

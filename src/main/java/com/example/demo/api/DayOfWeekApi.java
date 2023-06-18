@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.entity.DayOfWeekEntity;
+import com.example.demo.entity.MonHocEntity;
 import com.example.demo.service.DayOfWeekService;
 import com.example.demo.validation.ValidatorDayOfWeek;
 import io.swagger.v3.oas.annotations.Operation;
@@ -175,6 +176,41 @@ public class DayOfWeekApi {
 
             DayOfWeekEntity dayOfWeekEntity = dayOfWeekService.findByMaDOW(maDOW);
             returnObject.setRetObj(dayOfWeekEntity);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
+    }
+
+    @Operation(summary = "Get List Thoi Gian Day by maGV.")
+    @GetMapping("/dayOfWeek/giangVien/{maGV}")
+    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) })})
+    public ResponseEntity<?> getListDOWByMaGV(@PathVariable String maGV) {
+
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            log.info("Get List Mon Hoc By maGV!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            validatorDayOfWeek.validateGetListDOWByMaGV(maGV);
+            List<DayOfWeekEntity> dayOfWeekEntityList = dayOfWeekService.findAllByMaGV(maGV);
+            returnObject.setRetObj(dayOfWeekEntityList);
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);

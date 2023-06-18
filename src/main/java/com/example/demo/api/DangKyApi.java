@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.common.FunctionCommon;
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.DangKyDto;
 import com.example.demo.dto.DangKyResponseDto;
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,6 +52,9 @@ public class DangKyApi {
 
     @Autowired
     private ValidatorDangKy validatorDangKy;
+
+    @Autowired
+    private FunctionCommon functionCommon;
 
     /* CREATE - EDIT */
     @Operation(summary = "Dang ky mon.")
@@ -181,7 +186,6 @@ public class DangKyApi {
     }
 
     /* FIND ALL BY MASV */
-
     @Operation(summary = "Get danh sach dangKy sinh vien by maSinhVien & maKeHoach")
     @GetMapping("/dangKy/maSV/{maSV}")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
@@ -261,7 +265,7 @@ public class DangKyApi {
 
         List<DangKyEntity> dangKyEntityList = dangKyService.findAllByMaLopTc(maLopTc);
 
-        if(dangKyEntityList != null){
+        if(dangKyEntityList != null && dangKyEntityList.size() > 0){
             // Tạo một sheet trong workbook
             Sheet sheet = workbook.createSheet(dangKyEntityList.get(0).getTenMH() + " - " + dangKyEntityList.get(0).getMaLopTc());
 
@@ -356,27 +360,35 @@ public class DangKyApi {
 
                 countRow++;
             }
+
+            // Ghi workbook vào ByteArrayOutputStream
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            outputStream.close();
+
+            // Thiết lập đầu ra là một tệp Excel
+            byte[] excelContent = outputStream.toByteArray();
+
+            // Thiết lập HttpHeaders cho tệp Excel
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
+            headers.setContentDispositionFormData("attachment", dangKyEntityList.get(0).getMaLopTc() + ".xlsx");
+
+            // Trả về tệp Excel dưới dạng phản hồi HTTP để trực tiếp tải xuống
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .body(excelContent);
+        }
+        else {
+            ReturnObject returnObject = new ReturnObject();
+            returnObject.setStatus(ReturnObject.ERROR);
+            returnObject.setMessage("LopTC is not found!");
+
+            byte[] errorBytes = functionCommon.convertObjectToBytes(returnObject);
+            return new ResponseEntity<>(errorBytes, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        // Ghi workbook vào ByteArrayOutputStream
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
-        outputStream.close();
-
-
-        // Thiết lập đầu ra là một tệp Excel
-        byte[] excelContent = outputStream.toByteArray();
-
-        // Thiết lập HttpHeaders cho tệp Excel
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
-        headers.setContentDispositionFormData("attachment", dangKyEntityList.get(0).getMaLopTc() + ".xlsx");
-
-        // Trả về tệp Excel dưới dạng phản hồi HTTP để trực tiếp tải xuống
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .body(excelContent);
     }
 
     /* EXCEL -> NHẬP ĐIỂM / EDIT ĐIỂM */
@@ -485,5 +497,43 @@ public class DangKyApi {
         returnObject.setMessage("200");
         return ResponseEntity.ok(returnObject);
 
+    }
+
+    /* FIND ALL NO MON BY MASV */
+    @Operation(summary = "Get danh sach dangKy sinh vien by maSinhVien & maKeHoach")
+    @GetMapping("/dangKy/no-mon/maSV/{maSV}")
+    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) })})
+    public ResponseEntity<?> getAllCacMonNo(@PathVariable(required = true) String maSV) {
+
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            log.info("Get danh sach no mon By maSV!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            validatorDangKy.validateGetListNoMonByMaSV(maSV);
+
+            List<DangKyEntity> dangKyEntityList = dangKyService.findAllByMaSV(maSV);
+
+            returnObject.setRetObj(dangKyEntityList);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
     }
 }

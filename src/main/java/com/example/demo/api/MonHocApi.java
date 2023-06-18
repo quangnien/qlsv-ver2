@@ -457,52 +457,39 @@ public class MonHocApi {
 //    }
 
 
-//    @Operation(summary = "Get List Mon Hoc by maLop.")
-//    @GetMapping("/monHoc/lop/{maLop}")
-//    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Success",
-//                    content = {
-//                            @Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
-//            @ApiResponse(responseCode = "401", description = "Unauthorized",
-//                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
-//            @ApiResponse(responseCode = "403", description = "Forbidden",
-//                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
-//            @ApiResponse(responseCode = "500", description = "Internal server error",
-//                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) })})
-//    public ResponseEntity<?> getListMonHocByMaLop(@PathVariable String maLop,
-//                                                @RequestParam(defaultValue = "0") int page,
-//                                                @RequestParam(defaultValue = "999") int size) {
-//
-//        ReturnObject returnObject = new ReturnObject();
-//        try {
-//            log.info("Get List Mon Hoc By maLop!");
-//
-//            returnObject.setStatus(ReturnObject.SUCCESS);
-//            returnObject.setMessage("200");
-//
-//            validatorMonHoc.validateGetListMonHocByMaLop(maLop);
-//            List<MonHocEntity> monHocEntity = monHocService.getListMonHocByMaLop(maLop, page, size);
-//            returnObject.setRetObj(monHocEntity);
-//
-//            /*for paging*/
-//            List<MonHocEntity> dsLopTcEntityForPaging = monHocService.getListMonHocByMaLop(maLop, 0, 100000);
-//
-//            double totalPageDouble = (double) dsLopTcEntityForPaging.size() / size;
-//            int totalPageForPaging = (int) Math.ceil(totalPageDouble);
-//
-//            returnObject.setPage(page);
-//            returnObject.setTotalRetObjs(dsLopTcEntityForPaging.size());
-//            returnObject.setTotalPages(totalPageForPaging);
-//        }
-//        catch (Exception ex){
-//            returnObject.setStatus(ReturnObject.ERROR);
-////            returnObject.setMessage(ex.getMessage());
-//            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
-//            returnObject.setMessage(errorMessage);
-//        }
-//
-//        return ResponseEntity.ok(returnObject);
-//    }
+    @Operation(summary = "Get List Mon Hoc by maGV.")
+    @GetMapping("/monHoc/giangVien/{maGV}")
+    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MonHocEntity.class)) })})
+    public ResponseEntity<?> getListMonHocByMaGV(@PathVariable String maGV) {
+
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            log.info("Get List Mon Hoc By maGV!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            validatorMonHoc.validateGetListMonHocByMaGV(maGV);
+            List<MonHocEntity> monHocEntity = monHocService.findAllByMaGV(maGV);
+            returnObject.setRetObj(monHocEntity);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
+    }
 
 }

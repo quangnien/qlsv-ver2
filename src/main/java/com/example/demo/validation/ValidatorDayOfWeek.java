@@ -60,4 +60,13 @@ public class ValidatorDayOfWeek implements Validator {
         }
     }
 
+    @Transactional
+    public void validateGetListDOWByMaGV(String maGV) throws BusinessException {
+
+        if(maGV == null || "".equals(maGV)){
+            throw new BusinessException(MasterDataExceptionConstant.E_DAYOFWEEK_NOT_FOUND_DAYOFWEEK);
+        }
+
+    }
+
 }

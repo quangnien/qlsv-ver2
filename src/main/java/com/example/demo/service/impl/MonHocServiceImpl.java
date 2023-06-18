@@ -24,16 +24,12 @@ public class MonHocServiceImpl implements MonHocService {
 
     @Autowired
     private MonHocRepository monHocRepository;
-
     @Autowired
     private MHTQRepository mhtqRepository;
-
     @Autowired
-    private CTDTRepository ctdtRepository;
-
+    private GiangDayRepository giangDayRepository;
     @Autowired
     private TichLuyRepository tichLuyRepository;
-
     @Autowired
     private LopRepository lopRepository;
 
@@ -143,6 +139,17 @@ public class MonHocServiceImpl implements MonHocService {
             monHocModifyDtoList.add(monHocModifyDto);
         }
         return monHocModifyDtoList;
+    }
+
+    @Override
+    public List<MonHocEntity> findAllByMaGV(String maGV) {
+        List<MonHocEntity> monHocEntityList = new ArrayList<>();
+        List<GiangDayEntity> giangDayEntityList = giangDayRepository.findAllByMaGV(maGV);
+        for(GiangDayEntity giangDayEntity : giangDayEntityList){
+            MonHocEntity monHocEntity = monHocRepository.findByMaMH(giangDayEntity.getMaMH());
+            monHocEntityList.add(monHocEntity);
+        }
+        return monHocEntityList;
     }
 
 }

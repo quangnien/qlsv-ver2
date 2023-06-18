@@ -3,6 +3,7 @@ package com.example.demo.common;
 import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.SinhVienEntity;
 import com.example.demo.payload.request.SignupRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -78,5 +79,17 @@ public class FunctionCommon {
 
         // Return the List
         return resultList;
+    }
+
+    // Hàm chuyển đổi object thành mảng byte
+    public byte[] convertObjectToBytes(ReturnObject returnObject) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsBytes(returnObject);
+        } catch (Exception e) {
+            // Xử lý nếu có lỗi xảy ra trong quá trình chuyển đổi
+            e.printStackTrace();
+            return null; // hoặc thực hiện xử lý khác tùy ý
+        }
     }
 }

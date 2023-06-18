@@ -13,7 +13,7 @@ public interface DangKyService {
     public List<DangKyEntity> findAllByMaSVAndMaKeHoach(String maSV, String maKeHoach);
     public List<DangKyEntity> findAllByMaLopTc(String maLopTc);
     public DangKyEntity findById(String id);
-
     public List<DangKyEntity> findAllByMaLopTc(String maLopTc, int page, int size);
+    public List<DangKyEntity> findAlByMaSV(String maSV);
 
 }
