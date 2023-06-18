@@ -151,7 +151,7 @@ public class DangKyServiceImpl implements DangKyService {
             dangKyEntity.setTenSV(sinhVientity.getHoSV() + " " + sinhVientity.getTenSV());
             dangKyEntity.setTenMH(lopTcEntity.getTenMH());
 
-            dangKyEntity.setMaKeHoach(lopTcEntity.getMaKeHoach());
+            dangKyEntity.setMaKeHoach(maKeHoachClosest);
 
             // ---
             LopEntity lopEntity = lopRepository.findByMaLop(lopTcEntity.getMaLop());
