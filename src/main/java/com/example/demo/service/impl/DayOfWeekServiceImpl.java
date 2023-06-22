@@ -1,12 +1,10 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.DayOfWeekEntity;
-import com.example.demo.entity.GiangDayEntity;
 import com.example.demo.entity.GvDowEntity;
-import com.example.demo.entity.MonHocEntity;
+import com.example.demo.service.DayOfWeekService;
 import com.example.demo.repository.DayOfWeekRepository;
 import com.example.demo.repository.GVDOWRepository;
-import com.example.demo.service.DayOfWeekService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

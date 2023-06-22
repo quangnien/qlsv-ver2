@@ -2,14 +2,15 @@ package com.example.demo.api;
 
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.UpdatePasswordDto;
-import com.example.demo.entity.GiangVienEntity;
 import com.example.demo.entity.SinhVienEntity;
-import com.example.demo.entity.UserEntity;
+import com.example.demo.factoryMethod.UpdatePasswordFactory;
 import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.repository.SinhVienRepository;
 import com.example.demo.service.GiangVienService;
 import com.example.demo.service.SinhVienService;
+import com.example.demo.service.UpdatePasswordService;
 import com.example.demo.service.UserService;
+import com.example.demo.strategy.StrategyUpdatePassword;
 import com.example.demo.validation.ValidatorAdmin;
 import com.example.demo.validation.ValidatorGiangVien;
 import com.example.demo.validation.ValidatorSinhVien;
@@ -80,6 +81,17 @@ public class DoiMatKhauApi {
     @Autowired
     private ValidatorAdmin validatorAdmin;
 
+    /* _________ STRATEGY PATTERN _________ */
+    @Autowired
+//    private final UpdatePasswordService updatePasswordService;
+    private UpdatePasswordService updatePasswordService;
+
+    public DoiMatKhauApi(UpdatePasswordService updatePasswordService) {
+        this.updatePasswordService = updatePasswordService;
+    }
+    /* _________ STRATEGY PATTERN _________ */
+
+
     @Operation(summary = "Update password")
     @PutMapping("/updatePassword")
     @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
@@ -107,7 +119,9 @@ public class DoiMatKhauApi {
             returnObject.setStatus(ReturnObject.SUCCESS);
             returnObject.setMessage("200");
 
-            /* get info user is logining*/
+            /* _________ STRATEGY PATTERN _________ */
+
+            /* get info user is logining */
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<String> roleList = new ArrayList<>();
             if (principal instanceof UserDetails) {
@@ -116,64 +130,16 @@ public class DoiMatKhauApi {
                         .collect(Collectors.toList()));
             }
 
-            if(roleList.get(0).equals("ROLE_ADMIN")){
-                validatorAdmin.validateUpdatePasswordAdmin(updatePasswordDto);
+            StrategyUpdatePassword strategy = UpdatePasswordFactory.createStrategyUpdatePW(roleList.get(0));
+            updatePasswordService.setStrategyUpdatePassword(strategy);
+            updatePasswordService.updatePassword(updatePasswordDto);
 
-                /* update PW UserEntity*/
-                UserEntity userEntity = userService.findById(updatePasswordDto.getId());
-                userEntity.setPassword(encoder.encode(updatePasswordDto.getMatKhauMoi()));
-                userService.updateUser(userEntity);
+            /* _________ STRATEGY PATTERN _________ */
 
-                returnObject.setRetObj(userEntity);
-            }
-            else if(roleList.get(0).equals("ROLE_GIANGVIEN")){
-                validatorGiangVien.validateUpdatePasswordGiangVien(updatePasswordDto);
-
-//                GiangVienEntity getGiangVienByDB = (GiangVienEntity) commonService.getObjectById(updatePasswordDto.getId(), new GiangVienDto());
-
-                UserEntity userEntity = userService.findById(updatePasswordDto.getId());
-                // maSV
-                String userName = userEntity.getUsername();
-                GiangVienEntity getGiangVienByDB = (GiangVienEntity) giangVienRepository.findByMaGV(userName);
-
-                /* update PW GiangVienEntity*/
-                getGiangVienByDB.setPassword(updatePasswordDto.getMatKhauMoi());
-
-                giangVienService.updateGiangVien(getGiangVienByDB);
-
-                /* update PW UserEntity*/
-//                UserEntity userEntity = userService.findByUsername(getGiangVienByDB.getMaSv());
-                userEntity.setPassword(encoder.encode(updatePasswordDto.getMatKhauMoi()));
-                userService.updateUser(userEntity);
-
-                returnObject.setRetObj(getGiangVienByDB);
-            }
-            else if(roleList.get(0).equals("ROLE_SINHVIEN")){
-                validatorSinhVien.validateUpdatePasswordSinhVien(updatePasswordDto);
-
-//                SinhVienEntity getSinhVienByDB = (SinhVienEntity) commonService.getObjectById(updatePasswordDto.getId(), new SinhVienDto());
-
-                UserEntity userEntity = userService.findById(updatePasswordDto.getId());
-                // maSV
-                String userName = userEntity.getUsername();
-                SinhVienEntity getSinhVienByDB = (SinhVienEntity) sinhVienRepository.findByMaSV(userName);
-
-                /* update PW SinhVienEntity*/
-                getSinhVienByDB.setPassword(updatePasswordDto.getMatKhauMoi());
-                sinhVienService.updateExist(getSinhVienByDB);
-
-                /* update PW UserEntity*/
-//                UserEntity userEntity = userService.findByUsername(getSinhVienByDB.getMaSv());
-                userEntity.setPassword(encoder.encode(updatePasswordDto.getMatKhauMoi()));
-                userService.updateUser(userEntity);
-
-                returnObject.setRetObj(getSinhVienByDB);
-            }
-
+            returnObject.setRetObj(updatePasswordDto);
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);
-//            returnObject.setMessage(ex.getMessage());
             String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
             returnObject.setMessage(errorMessage);
         }

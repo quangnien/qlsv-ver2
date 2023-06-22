@@ -536,4 +536,75 @@ public class DangKyApi {
 
         return ResponseEntity.ok(returnObject);
     }
+
+
+    /* DELETE - HỦY ĐĂNG KÝ MÔN */
+    @Operation(summary = "Huy dang ky mon.")
+    @DeleteMapping("/dangKy")
+    @PreAuthorize("hasAuthority('ROLE_SINHVIEN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DangKyEntity.class)) })})
+    public ResponseEntity<?> huyDangKy(@Valid @RequestBody DangKyDto dangKyMonDto, BindingResult bindingResult) {
+
+        ReturnObject returnObject = new ReturnObject();
+
+        if (bindingResult.hasErrors()) {
+            returnObject.setStatus(ReturnObject.ERROR);
+            returnObject.setMessage(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+            return ResponseEntity.ok(returnObject);
+        }
+        try {
+            log.info("Huy dang ky mon!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            KeHoachNamEntity keHoachNamEntity = keHoachNamService.getKeHoachNamClosest();
+            String maKeHoachClosest = keHoachNamEntity.getMaKeHoach();
+
+            DangKyDto dangKyDtoToDelete = new DangKyDto();
+            if(dangKyMonDto != null && dangKyMonDto.getMaLopTcList().size() > 0) {
+                List<DangKyEntity> dangKyEntityListExist = dangKyService.findAllByMaSV(dangKyMonDto.getMaSV());
+
+                dangKyDtoToDelete.setMaSV(dangKyMonDto.getMaSV());
+                List<String> maLopTcList = new ArrayList<>();
+
+                for(DangKyEntity dangKyEntity : dangKyEntityListExist){
+                    boolean isExist = false;
+                    for(String maLopTcParam : dangKyMonDto.getMaLopTcList()){
+                        if(dangKyEntity.getMaLopTc().equals(maLopTcParam)){
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if(isExist == false){
+                        maLopTcList.add(dangKyEntity.getMaLopTc());
+                    }
+                }
+
+                dangKyDtoToDelete.setMaLopTcList(maLopTcList);
+
+            }
+
+            DangKyResponseDto dangKyMonDtoResult = dangKyService.updateExistDangKyMon(dangKyDtoToDelete, maKeHoachClosest);
+
+            returnObject.setRetObj(dangKyMonDtoResult);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
+    }
+
 }

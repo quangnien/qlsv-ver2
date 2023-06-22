@@ -12,7 +12,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UpdatePasswordDto {
 
-	private String id;
+//	private String id;
+	private String userName;
 
 	@NotBlank(message = "Vui Lòng Nhập Mật Khẩu Cũ")
 	private String matKhauCu;

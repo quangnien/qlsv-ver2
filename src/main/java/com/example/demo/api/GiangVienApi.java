@@ -3,10 +3,7 @@ package com.example.demo.api;
 import com.example.demo.common.ReturnObject;
 import com.example.demo.dto.GVDOWDto;
 import com.example.demo.dto.GiangDayDto;
-import com.example.demo.entity.GiangDayEntity;
 import com.example.demo.entity.GiangVienEntity;
-import com.example.demo.entity.GvDowEntity;
-import com.example.demo.entity.MHTQEntity;
 import com.example.demo.service.GVDOWService;
 import com.example.demo.service.GiangDayService;
 import com.example.demo.service.GiangVienService;
@@ -28,7 +25,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

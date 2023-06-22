@@ -1,26 +1,14 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.ERole;
-import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.LopEntity;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.payload.request.SignupRequest;
-import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.LopRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.LopService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Service

@@ -2,14 +2,10 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.MonHocModifyDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.*;
 import com.example.demo.service.MonHocService;
+import com.example.demo.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -148,7 +148,7 @@ public class ValidatorGiangVien implements Validator {
     @Transactional
     public void validateUpdatePasswordGiangVien(UpdatePasswordDto updatePasswordDto) throws BusinessException {
 
-        if(updatePasswordDto.getId() == null){
+        if(updatePasswordDto.getUserName() == null){
             throw new BusinessException(MasterDataExceptionConstant.E_GIANGVIEN_NOT_FOUND_GIANGVIEN);
         }
         else if(updatePasswordDto.getMatKhauCu() == null || updatePasswordDto.getMatKhauCu().equals("")){
@@ -165,8 +165,7 @@ public class ValidatorGiangVien implements Validator {
 //        }
         else {
 
-            UserEntity userEntity = userService.findById(updatePasswordDto.getId());
-//            UserEntity userEntity = userRepository.findById(updatePasswordDto.getId());
+            UserEntity userEntity = userService.findByUsername(updatePasswordDto.getUserName());
 
             if(userEntity == null){
                 throw new BusinessException(MasterDataExceptionConstant.E_GIANGVIEN_NOT_FOUND_GIANGVIEN);
@@ -175,7 +174,7 @@ public class ValidatorGiangVien implements Validator {
                 // maGV
                 String userName = userEntity.getUsername();
 
-                GiangVienEntity getGiangVienByDB = (GiangVienEntity) giangVienRepository.findByMaGV(userName);
+                GiangVienEntity getGiangVienByDB = giangVienRepository.findByMaGV(userName);
 
                 if(getGiangVienByDB == null){
                     throw new BusinessException(MasterDataExceptionConstant.E_GIANGVIEN_NOT_FOUND_GIANGVIEN);

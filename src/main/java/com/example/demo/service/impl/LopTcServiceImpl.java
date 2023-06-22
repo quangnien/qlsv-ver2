@@ -2,13 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.MoLopTcDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.LopRepository;
-import com.example.demo.repository.LopTcRepository;
-import com.example.demo.repository.MonHocRepository;
 import com.example.demo.service.CTDTService;
 import com.example.demo.service.KeHoachNamService;
 import com.example.demo.service.LopTcService;
 import com.example.demo.service.TichLuyService;
+import com.example.demo.repository.LopRepository;
+import com.example.demo.repository.LopTcRepository;
+import com.example.demo.repository.MonHocRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

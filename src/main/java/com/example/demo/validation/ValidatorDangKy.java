@@ -2,7 +2,6 @@ package com.example.demo.validation;
 
 import com.example.demo.constant.MasterDataExceptionConstant;
 import com.example.demo.dto.DangKyDto;
-import com.example.demo.entity.DangKyEntity;
 import com.example.demo.entity.KeHoachNamEntity;
 import com.example.demo.entity.LopTcEntity;
 import com.example.demo.exception.BusinessException;
@@ -15,9 +14,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author NienNQ

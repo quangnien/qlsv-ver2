@@ -8,7 +8,6 @@ import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.SinhVienRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -151,7 +150,7 @@ public class ValidatorSinhVien implements Validator {
     @Transactional
     public void validateUpdatePasswordSinhVien(UpdatePasswordDto updatePasswordDto) throws BusinessException {
 
-        if(updatePasswordDto.getId() == null){
+        if(updatePasswordDto.getUserName() == null){
             throw new BusinessException(MasterDataExceptionConstant.E_SINHVIEN_NOT_FOUND_SINHVIEN);
         }
         else if(updatePasswordDto.getMatKhauCu() == null || updatePasswordDto.getMatKhauCu().equals("")){
@@ -168,8 +167,7 @@ public class ValidatorSinhVien implements Validator {
 //        }
         else {
 
-            UserEntity userEntity = userService.findById(updatePasswordDto.getId());
-//            UserEntity userEntity = userRepository.findById(updatePasswordDto.getId());
+            UserEntity userEntity = userService.findByUsername(updatePasswordDto.getUserName());
 
             if(userEntity == null){
                 throw new BusinessException(MasterDataExceptionConstant.E_SINHVIEN_NOT_FOUND_SINHVIEN);

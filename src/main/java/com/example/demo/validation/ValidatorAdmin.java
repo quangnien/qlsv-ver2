@@ -46,7 +46,7 @@ public class ValidatorAdmin implements Validator {
     @Transactional
     public void validateUpdatePasswordAdmin(UpdatePasswordDto updatePasswordDto) throws BusinessException {
 
-        if(updatePasswordDto.getId() == null){
+        if(updatePasswordDto.getUserName() == null){
             throw new BusinessException(MasterDataExceptionConstant.E_ADMIN_NOT_FOUND_ADMIN);
         }
         else if(updatePasswordDto.getMatKhauCu() == null || updatePasswordDto.getMatKhauCu().equals("")){
@@ -59,7 +59,7 @@ public class ValidatorAdmin implements Validator {
 //            throw new BusinessException(MasterDataExceptionConstant.E_COMMON_NOT_CONFIRM_PASSWORD);
 //        }
         else {
-            UserEntity userEntity = userService.findById(updatePasswordDto.getId());
+            UserEntity userEntity = userService.findByUsername(updatePasswordDto.getUserName());
 
 //            if(updatePasswordDto.getConfirmPassword().equals(updatePasswordDto.getMatKhau()) == false){
 //                throw new BusinessException(MasterDataExceptionConstant.E_COMMON_NOT_EQUAL_CONFIRM_PASSWORD);

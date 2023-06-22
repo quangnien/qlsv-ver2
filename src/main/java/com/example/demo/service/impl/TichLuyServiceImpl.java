@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.TichLuyEntity;
-import com.example.demo.repository.TichLuyRepository;
 import com.example.demo.service.TichLuyService;
+import com.example.demo.repository.TichLuyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
