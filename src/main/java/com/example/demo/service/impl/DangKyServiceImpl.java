@@ -69,6 +69,7 @@ public class DangKyServiceImpl implements DangKyService {
                 if(lopTcEntity != null){
                     lopTcEntity.setSoLuongCon(lopTcEntity.getSoLuongCon() + 1);
                 }
+                lopTcRepository.save(lopTcEntity);
                 /*END SET SOLUONGCON CUA LOPTINCHI*/
 
                 dangKyRepository.deleteById(item.getId());
@@ -142,6 +143,7 @@ public class DangKyServiceImpl implements DangKyService {
             if(lopTcEntity != null){
                 lopTcEntity.setSoLuongCon(lopTcEntity.getSoLuongCon() - 1);
             }
+            lopTcRepository.save(lopTcEntity);
             /* END SET SOLUONGCON CUA LOPTINCHI */
 
             /* end SET MORE INFO */
@@ -149,6 +151,8 @@ public class DangKyServiceImpl implements DangKyService {
 
             dangKyEntity.setTenSV(sinhVientity.getHoSV() + " " + sinhVientity.getTenSV());
             dangKyEntity.setTenMH(lopTcEntity.getTenMH());
+            dangKyEntity.setMaMH(lopTcEntity.getMaMH());
+
 
             dangKyEntity.setMaKeHoach(maKeHoachClosest);
 

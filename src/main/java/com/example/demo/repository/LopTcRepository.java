@@ -25,7 +25,7 @@ public interface LopTcRepository extends MongoRepository<LopTcEntity, String> {
 //    int countLopTcByMaGV(String maGv);
     int countLopTcByMaMH(String maMh);
 
-    Page<LopTcEntity> findAllByMaLop(String maLop, Pageable pageable);
+    List<LopTcEntity> findAllByMaLop(String maLop);
 
     List<LopTcEntity> findAllByMaMH(String maMh);
 

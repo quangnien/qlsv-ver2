@@ -60,4 +60,7 @@ public class LopTcEntity {
 	private String tenMH;
 	private String tenLop;
 
+//	private String tenGV;
+	private int stc;
+
 }

@@ -2,13 +2,11 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.MoLopTcDto;
 import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.CTDTService;
 import com.example.demo.service.KeHoachNamService;
 import com.example.demo.service.LopTcService;
 import com.example.demo.service.TichLuyService;
-import com.example.demo.repository.LopRepository;
-import com.example.demo.repository.LopTcRepository;
-import com.example.demo.repository.MonHocRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,11 +40,24 @@ public class LopTcServiceImpl implements LopTcService {
     @Autowired
     private LopRepository lopRepository;
 
+    @Autowired
+    private CTDTRepository ctdtRepositoryt;
+
+    @Autowired
+    private TichLuyRepository tichLuyRepository;
+
     @Override
-    public List<LopTcEntity> findAllByMaLop(String maLop, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        Page<LopTcEntity> resultPage = lopTcRepository.findAllByMaLop(maLop, pageable);
-        return resultPage.getContent();
+    public List<LopTcEntity> findAllByMaLop(String maLop){
+        List<LopTcEntity> resultPage = lopTcRepository.findAllByMaLop(maLop);
+        for(LopTcEntity lopTcEntity : resultPage){
+            LopEntity lopEntity = lopRepository.findByMaLop(lopTcEntity.getMaLop());
+            CTDTEntity ctdtEntity = ctdtRepositoryt.findByMaCTDT(lopEntity.getMaCTDT());
+//            MonHocEntity monHocEntity = monHocRepository.findByMaMH(lopTcEntity.getMaMH());
+
+            TichLuyEntity tichLuyEntity = tichLuyRepository.findByMaCTDTAndMaMH(ctdtEntity.getMaCTDT(), lopTcEntity.getMaMH());
+            lopTcEntity.setStc(tichLuyEntity.getStc());
+        }
+        return resultPage;
     }
 
     @Override

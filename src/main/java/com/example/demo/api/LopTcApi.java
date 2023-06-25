@@ -370,9 +370,7 @@ public class LopTcApi {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) }),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) })})
-    public ResponseEntity<?> getLopTcByMaLop(@PathVariable String maLop,
-                                               @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "999") int size) {
+    public ResponseEntity<?> getLopTcByMaLop(@PathVariable String maLop) {
 
         ReturnObject returnObject = new ReturnObject();
         try {
@@ -382,18 +380,8 @@ public class LopTcApi {
             returnObject.setMessage("200");
 
             validatorLopTc.validateGetListLopTcByMaLop(maLop);
-            List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaLop(maLop, page, size);
+            List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaLop(maLop);
             returnObject.setRetObj(dsLopTcEntity);
-
-            /*for paging*/
-            List<LopTcEntity> dsLopTcEntityForPaging = lopTcService.findAllByMaLop(maLop, 0, 100000);
-
-            double totalPageDouble = (double) dsLopTcEntityForPaging.size() / size;
-            int totalPageForPaging = (int) Math.ceil(totalPageDouble);
-
-            returnObject.setPage(page);
-            returnObject.setTotalRetObjs(dsLopTcEntityForPaging.size());
-            returnObject.setTotalPages(totalPageForPaging);
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);

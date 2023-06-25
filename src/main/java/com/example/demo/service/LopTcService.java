@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LopTcService {
 
-    public List<LopTcEntity> findAllByMaLop(String maLop, int page, int size);
+    public List<LopTcEntity> findAllByMaLop(String maLop);
 
     public List<LopTcEntity> getListLopTcByMaMH(String maMH);
 

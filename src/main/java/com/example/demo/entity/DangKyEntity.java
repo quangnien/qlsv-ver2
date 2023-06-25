@@ -46,6 +46,7 @@ public class DangKyEntity {
 	private int tlGk;
 	private int tlCk;
 	private int stc;
+	private String maMH;
 	private String maKeHoach;
 
 }
