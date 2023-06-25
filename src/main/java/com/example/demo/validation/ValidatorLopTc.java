@@ -119,6 +119,22 @@ public class ValidatorLopTc implements Validator {
 
     }
 
+    @Transactional
+    public void validateGetListLopTcByMaKeHoach(String maKeHoach) throws BusinessException {
+
+        if(maKeHoach == null || "".equals(maKeHoach)){
+            throw new BusinessException(MasterDataExceptionConstant.E_KEHOACHNAM_NOT_FOUND_KEHOACHNAM);
+        }
+        else {
+            int countLopByMaKeHoach = keHoachNamRepository.countKeHoachNamByMaKeHoach(maKeHoach);
+
+            if (countLopByMaKeHoach == 0) {
+                throw new BusinessException(MasterDataExceptionConstant.E_KEHOACHNAM_NOT_FOUND_KEHOACHNAM);
+            }
+        }
+
+    }
+
 //    @Transactional
 //    public void validateSearchThongKe(String idKeHoachNam, String keySearch) throws BusinessException {
 //

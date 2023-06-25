@@ -392,6 +392,41 @@ public class LopTcApi {
         return ResponseEntity.ok(returnObject);
     }
 
+    @Operation(summary = "Get danh sach lop tin chi by maKeHoach")
+    @GetMapping("/lopTc/maKeHoach/{maKeHoach}")
+    @PreAuthorize("hasAuthority('ROLE_GIANGVIEN') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SINHVIEN')")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) }),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) })})
+    public ResponseEntity<?> getLopTcByMaKeHoach(@PathVariable String maKeHoach) {
+
+        ReturnObject returnObject = new ReturnObject();
+        try {
+            log.info("Get Ds Lop Tin Chi By maKeHoach!");
+
+            returnObject.setStatus(ReturnObject.SUCCESS);
+            returnObject.setMessage("200");
+
+            validatorLopTc.validateGetListLopTcByMaKeHoach(maKeHoach);
+            List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaKeHoach(maKeHoach);
+            returnObject.setRetObj(dsLopTcEntity);
+        }
+        catch (Exception ex){
+            returnObject.setStatus(ReturnObject.ERROR);
+            String errorMessage = ex.getMessage().replace("For input string:", "").replace("\"", "");
+            returnObject.setMessage(errorMessage);
+        }
+
+        return ResponseEntity.ok(returnObject);
+    }
+
 //
 //    @Operation(summary = "Get danh sach lop tin chi by maGV and maKeHoach")
 //    @PostMapping("/lopTc/giangVien/{maGV}")

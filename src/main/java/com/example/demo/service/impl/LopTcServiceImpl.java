@@ -61,6 +61,19 @@ public class LopTcServiceImpl implements LopTcService {
     }
 
     @Override
+    public List<LopTcEntity> findAllByMaKeHoach(String maKeHoach){
+        List<LopTcEntity> resultPage = lopTcRepository.findAllByMaKeHoach(maKeHoach);
+        for(LopTcEntity lopTcEntity : resultPage){
+            LopEntity lopEntity = lopRepository.findByMaLop(lopTcEntity.getMaLop());
+            CTDTEntity ctdtEntity = ctdtRepositoryt.findByMaCTDT(lopEntity.getMaCTDT());
+
+            TichLuyEntity tichLuyEntity = tichLuyRepository.findByMaCTDTAndMaMH(ctdtEntity.getMaCTDT(), lopTcEntity.getMaMH());
+            lopTcEntity.setStc(tichLuyEntity.getStc());
+        }
+        return resultPage;
+    }
+
+    @Override
     public List<LopTcEntity> getListLopTcByMaMH(String maMH) {
         return lopTcRepository.findAllByMaMH(maMH);
     }
@@ -90,10 +103,10 @@ public class LopTcServiceImpl implements LopTcService {
         return lopTcRepository.findByMaLopTc(maLopTc);
     }
 
-    @Override
-    public List<LopTcEntity> findAllByMaKeHoach(String maKeHoach) {
-        return lopTcRepository.findAllByMaKeHoach(maKeHoach);
-    }
+//    @Override
+//    public List<LopTcEntity> findAllByMaKeHoach(String maKeHoach) {
+//        return lopTcRepository.findAllByMaKeHoach(maKeHoach);
+//    }
 
     @Override
     public LopTcEntity findById(String id) {
