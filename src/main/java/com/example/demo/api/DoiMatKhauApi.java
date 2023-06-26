@@ -8,8 +8,8 @@ import com.example.demo.repository.GiangVienRepository;
 import com.example.demo.repository.SinhVienRepository;
 import com.example.demo.service.GiangVienService;
 import com.example.demo.service.SinhVienService;
-import com.example.demo.service.UpdatePasswordService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UpdatePasswordServiceImpl;
 import com.example.demo.strategy.StrategyUpdatePassword;
 import com.example.demo.validation.ValidatorAdmin;
 import com.example.demo.validation.ValidatorGiangVien;
@@ -82,13 +82,15 @@ public class DoiMatKhauApi {
     private ValidatorAdmin validatorAdmin;
 
     /* _________ STRATEGY PATTERN _________ */
-    @Autowired
+//    @Autowired
 //    private final UpdatePasswordService updatePasswordService;
-    private UpdatePasswordService updatePasswordService;
-
-    public DoiMatKhauApi(UpdatePasswordService updatePasswordService) {
-        this.updatePasswordService = updatePasswordService;
-    }
+//    private final UpdatePasswordServiceImpl updatePasswordService;
+//
+//    public DoiMatKhauApi(UpdatePasswordServiceImpl updatePasswordService) {
+//        this.updatePasswordService = updatePasswordService;
+//    }
+    @Autowired
+    private UpdatePasswordServiceImpl updatePasswordService;
     /* _________ STRATEGY PATTERN _________ */
 
 

@@ -9,6 +9,8 @@ import com.example.demo.exception.BusinessException;
 import com.example.demo.repository.LopRepository;
 import com.example.demo.repository.SinhVienRepository;
 import com.example.demo.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,8 @@ import java.util.Optional;
  * @project qlsv
  */
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class ValidatorSinhVien implements Validator {
 
     @Autowired

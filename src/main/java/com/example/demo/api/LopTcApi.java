@@ -370,7 +370,7 @@ public class LopTcApi {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) }),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = LopTcEntity.class)) })})
-    public ResponseEntity<?> getLopTcByMaLop(@PathVariable String maLop) {
+    public ResponseEntity<?> getLopTcByMaLop(@PathVariable String maLop, @RequestParam(required = false, defaultValue = "") String maKeHoach) {
 
         ReturnObject returnObject = new ReturnObject();
         try {
@@ -380,8 +380,16 @@ public class LopTcApi {
             returnObject.setMessage("200");
 
             validatorLopTc.validateGetListLopTcByMaLop(maLop);
-            List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaLop(maLop);
-            returnObject.setRetObj(dsLopTcEntity);
+
+            if(maKeHoach.equals("")){
+                List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaLop(maLop);
+                returnObject.setRetObj(dsLopTcEntity);
+            }
+            else {
+                List<LopTcEntity> dsLopTcEntity = lopTcService.findAllByMaLopAndMaKeHoach(maLop, maKeHoach);
+                returnObject.setRetObj(dsLopTcEntity);
+            }
+
         }
         catch (Exception ex){
             returnObject.setStatus(ReturnObject.ERROR);

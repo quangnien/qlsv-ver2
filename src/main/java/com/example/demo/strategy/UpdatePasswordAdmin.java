@@ -9,11 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Component
 public class UpdatePasswordAdmin implements StrategyUpdatePassword{
     @Autowired
     private UserService userService;

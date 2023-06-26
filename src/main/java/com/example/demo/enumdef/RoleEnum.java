@@ -11,9 +11,9 @@ import java.util.List;
 
 public enum RoleEnum {
 
-    ADMIN("ADMIN", "ADMIN"),
-    GIANGVIEN("GIANGVIEN", "GIANGVIEN"),
-    SINHVIEN("SINHVIEN", "SINHVIEN");
+    ADMIN("ADMIN", "ROLE_ADMIN"),
+    GIANGVIEN("GIANGVIEN", "ROLE_GIANGVIEN"),
+    SINHVIEN("SINHVIEN", "ROLE_SINHVIEN");
 
     private String value;
 

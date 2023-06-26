@@ -11,12 +11,13 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Component
 public class UpdatePasswordSinhVien implements StrategyUpdatePassword{
+
     @Autowired
     private ValidatorSinhVien validatorSinhVien;
     @Autowired
@@ -48,4 +49,5 @@ public class UpdatePasswordSinhVien implements StrategyUpdatePassword{
         userService.updateUser(userEntity);
         
     }
+
 }
