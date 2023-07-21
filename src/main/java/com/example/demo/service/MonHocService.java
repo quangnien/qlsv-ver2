@@ -14,7 +14,7 @@ public interface MonHocService {
     public MonHocEntity addNew(MonHocEntity monHocEntity);
     public MonHocEntity updateExist(MonHocEntity monHocEntity);
     public List<MonHocEntity> findAll();
-    public MonHocEntity findById(String id);
+    public MonHocModifyDto findById(String id);
     public MonHocEntity findByMaMH(String maMH);
     public List<String> deleteList(List<String> lstId);
     public List<MonHocEntity> findAllByMaLop(String maLop);

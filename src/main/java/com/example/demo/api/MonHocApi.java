@@ -39,13 +39,10 @@ public class MonHocApi {
 
     @Autowired
     private MonHocService monHocService;
-
     @Autowired
     private MHTQService mhtqService;
-
     @Autowired
     private ValidatorMonHoc validatorMonHoc;
-
     @Autowired
     private FunctionCommon functionCommon;
 
@@ -312,7 +309,7 @@ public class MonHocApi {
             returnObject.setMessage("200");
 
             validatorMonHoc.validateGetMonHocById(monHocId);
-            MonHocEntity monHocEntity = monHocService.findById(monHocId);
+            MonHocModifyDto monHocEntity = monHocService.findById(monHocId);
             returnObject.setRetObj(monHocEntity);
         }
         catch (Exception ex){

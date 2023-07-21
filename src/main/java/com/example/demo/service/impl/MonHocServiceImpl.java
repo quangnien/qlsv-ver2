@@ -60,8 +60,27 @@ public class MonHocServiceImpl implements MonHocService {
     }
 
     @Override
-    public MonHocEntity findById(String id) {
-        return monHocRepository.findById(id).get();
+    public MonHocModifyDto findById(String id) {
+
+        MonHocModifyDto monHocModifyDto = new MonHocModifyDto();
+        MonHocEntity monHocEntity = monHocRepository.findById(id).get();
+        if(monHocEntity != null){
+            List<MHTQEntity> mhtqEntityList = mhtqRepository.findAllByMaMH(monHocEntity.getMaMH());
+            List<String> maMHTQList = new ArrayList<>();
+            List<String> tenMHTQList = new ArrayList<>();
+            for(MHTQEntity mhtqEntity : mhtqEntityList){
+                maMHTQList.add(mhtqEntity.getMaMHTQ());
+                tenMHTQList.add(mhtqEntity.getTenMHTQ());
+            }
+
+            monHocModifyDto.setId(monHocEntity.getId());
+            monHocModifyDto.setMaMH(monHocEntity.getMaMH());
+            monHocModifyDto.setTenMH(monHocEntity.getTenMH());
+            monHocModifyDto.setMaMHTQList(maMHTQList);
+            monHocModifyDto.setTenMHTQList(tenMHTQList);
+        }
+
+        return monHocModifyDto;
     }
 
     @Override
